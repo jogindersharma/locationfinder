@@ -173,15 +173,16 @@ public class Home extends Activity {
 		case 0:
 			fragment = new HomeFragment();
 			break;
-		/*case 1:
-			fragment = new FindPeopleFragment();
+		case 1:
+			fragment = new SearchFragment();;
 			break;
 		case 2:
-			fragment = new PhotosFragment();
+			fragment = new FriendFragment();
 			break;
 		case 3:
-			fragment = new CommunityFragment();
+			fragment = new SelfProfileFragment();
 			break;
+		/*
 		case 4:
 			fragment = new PagesFragment();
 			break;
