@@ -92,12 +92,17 @@
     <string name="UserProfileNewCode">Generate New Code</string>
     
     <!-- String for Search Item -->
-    <string name="SearchInput">Search Friends</string>
+    <string name="SearchInput">Enter Code</string>
     <string name="SearchItemName">Pramod Kumar Varma</string>
     <string name="SearchItemAddSubmit">Add</string>
     <string name="FriendProfileViewLoc">View Location On Map</string>
     <string name="SearchItemBlock">Block</string>
     <string name="SearchItemUnBlock">UnBlock</string>
-    
-
+    <string name="searchIcon">Search Icon</string>
+    <string-array name="searchByOptionsArray">
+        <item name="searchByOptions0">By Code</item>
+        <item name="searchByOptions1">By Name</item>
+        <item name="searchByOptions2">By Email</item>
+        <item name="searchByOptions3">By Mobile No.</item>
+    </string-array>
 </resources>

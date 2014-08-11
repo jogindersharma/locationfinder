@@ -2,10 +2,8 @@ package com.anaadih.locationfinder;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.anaadih.locationfinder.adapter.HomeListAdapter;
 import com.anaadih.locationfinder.dto.HomeDataItem;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

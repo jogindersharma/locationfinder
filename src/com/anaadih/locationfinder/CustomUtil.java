@@ -69,8 +69,8 @@ public class CustomUtil {
 	
 	public boolean isUserLogin() {
 		Log.e(TAG, "Try to check if user is Login.");
-        String userId = prefs.getString(StaticStrings.USER_ID, "");
-        if (userId.isEmpty()) {
+        int userId = prefs.getInt(StaticStrings.USER_ID, 0);
+        if (userId ==0) {
             Log.e(TAG, "User is not Login.");
             return false;
         } else {
@@ -78,9 +78,9 @@ public class CustomUtil {
         }
 	}
 	
-	public String getUserId() {
+	public int getUserId() {
 		Log.e(TAG, "Try to get User Id.");
-        String userId = prefs.getString(StaticStrings.USER_ID, "");
+        int userId = prefs.getInt(StaticStrings.USER_ID, 0);
         return userId;
 	}
 	

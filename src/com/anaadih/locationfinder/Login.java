@@ -142,7 +142,7 @@ public class Login extends Activity {
   						Toast.makeText(context, message, Toast.LENGTH_LONG).show();
   					} else if(success.equalsIgnoreCase("1")){
   						String message = jsonResult.getString("message");
-  						String userId = jsonResult.getString("userId");
+  						int userId = jsonResult.getInt("userId");
   						storeUserId(userId);
   						CustomUtil.getInstance(context).goToUserHome();
   					}
@@ -169,9 +169,9 @@ public class Login extends Activity {
         finish();
 	}
     
-    private void storeUserId(String userId) {
+    private void storeUserId(int userId) {
     	SharedPreferences.Editor editor = CustomUtil.getInstance(this).getSharedPrefObj().edit();
-	    editor.putString(StaticStrings.USER_ID, userId);
+	    editor.putInt(StaticStrings.USER_ID, userId);
 	    editor.commit();
     }
 }
