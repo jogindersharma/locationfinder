@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/sgibrightgray"
+    android:weightSum="1.0" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:layout_weight=".4" >
+
+        <ImageView
+            android:id="@+id/ivUserProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/images" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp" >
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="15dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:weightSum="1.0" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".8"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            android:id="@+id/tvUserProfileFirstName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/UserProfileFirstName"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".2"
+                        android:gravity="center" >
+
+                        <ImageView
+                            android:id="@+id/ivUserProfileFNameEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/edit" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="1.0" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".8"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            android:id="@+id/tvUserProfileLastName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/UserProfileLastName"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".2"
+                        android:gravity="center" >
+
+                        <ImageView
+                            android:id="@+id/ivUserProfileLNameEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/edit" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:weightSum="1.0"
+                    android:layout_marginTop="10dp" >
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".8"
+                        android:gravity="center_vertical" >
+                        
+                        <TextView
+                            android:id="@+id/tvUserProfileEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/UserProfileEmail"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                        
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".2"
+                        android:gravity="center" >
+                        
+                        <ImageView
+                            android:id="@+id/ivUserProfileEmailEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/edit" />
+                        
+                    </LinearLayout>
+                    
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="1.0" >
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".8"
+                        android:gravity="center_vertical" >
+                        
+                        <TextView
+                            android:id="@+id/tvUserProfileMob"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/UserProfileMob"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                        
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".2"
+                        android:gravity="center" >
+                        
+                        <ImageView
+                            android:id="@+id/ivUserProfileMobEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/edit" />
+                        
+                    </LinearLayout>
+                    
+                </LinearLayout>
+            
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="15dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:weightSum="1.0" >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".3" >
+
+                        <TextView
+                            android:id="@+id/tvUserProfileCodeLable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/UserProfileCodeLabel"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    </LinearLayout>
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight=".7"
+                        android:gravity="right" >
+
+                        <TextView
+                            android:id="@+id/tvUserProfileCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/UserProfileCode"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:layout_marginTop="10dp" >
+
+                    <Button
+                        android:id="@+id/btnUserProfileNewCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="5dip"
+                        android:background="@color/Blue"
+                        android:text="@string/UserProfileNewCode" />
+                    
+                </LinearLayout>
+            
+            </LinearLayout>
+
+        </LinearLayout>
+        
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/android"
+    android:weightSum="1.0" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight=".1"
+        android:gravity="center" >
+        
+        <TextView
+            android:id="@+id/tv_RegHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/RegHeader"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+    </LinearLayout>
+    
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".9" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1.0" >
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight=".2"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edt_RegFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:hint="@string/RegFName"
+                    android:background="@android:color/white"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" >
+                
+                </EditText>
+            
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/Blue" >
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight=".15"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edt_RegLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:hint="@string/RegLName"
+                    android:background="@android:color/white"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" >
+                
+                </EditText>
+            
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/Blue" >
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight=".15"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edt_RegEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:hint="@string/RegEmail"
+                    android:background="@android:color/white"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" >
+                
+                </EditText>
+            
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/Blue" >
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight=".15"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edt_RegMobNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:hint="@string/RegMobile"
+                    android:background="@android:color/white"
+                    android:inputType="number"
+                    android:singleLine="true" >
+                
+                </EditText>
+            
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/Blue" >
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight=".15"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edt_RegPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:hint="@string/RegPass"
+                    android:background="@android:color/white"
+                    android:inputType="textPassword"
+                    android:singleLine="true" >
+                
+                </EditText>
+            
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/Blue" >
+                </LinearLayout>
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_weight=".2"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edt_RegConfPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:hint="@string/RegConfPass"
+                    android:background="@android:color/white"
+                    android:inputType="textPassword"
+                    android:singleLine="true" >
+                
+                </EditText>
+            
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/Blue" >
+                </LinearLayout>
+                
+            </LinearLayout>
+			
+            <Button
+            android:id="@+id/btn_RegSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="@string/RegSubmit" />
+            
+        </LinearLayout>
+    </ScrollView>
+    
+</LinearLayout>

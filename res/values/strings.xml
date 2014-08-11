@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Location Finder</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!--  <string name="regToHidCam">Register to  Hidden Camera</string>
+    <string name="fName">First Name</string>
+    <string name="lName">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="rePassword">Re-Type Password</string>
+    <string name="register">Register</string>
+    
+    <string name="successfullRegMsg">Congratulations. You have Successfully Registered.</string>
+    <string name="closeApp">Close Application</string> -->
+    
+    <!-- <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string> -->
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Find People</item> 
+        <item >Friends</item>
+        <item >Communities</item>
+        <item >Pages</item>
+        <item >What\'s Hot</item>
+    </string-array>
+    
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_photos</item>
+        <item>@drawable/ic_communities</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_whats_hot</item>
+    </array>
+    
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    
+    
+    <!-- String for Login  -->
+    <string name="LoginHeader">Login</string>
+    <string name="LoginSubHeader">Already Account?</string>
+    <string name="LoginEmail">Enter Email</string>
+    <string name="LoginPass">Enter Password</string>
+    <string name="LoginSubmit">Login</string>
+    <string name="LoginSuggReg">If You have not registered yet!</string>  
+    <string name="LoginRegister">Click For Registration</string>
+    
+    <!-- String for Registration  -->
+    <string name="RegHeader">Registration</string>
+    <string name="RegFName">Enter First Name</string>
+    <string name="RegLName">Enter Last Name</string>
+    <string name="RegEmail">Enter Email</string>
+    <string name="RegMobile">Enter Mobile</string>
+    <string name="RegPass">Enter Password</string>
+    <string name="RegConfPass">Confirm Password</string>
+    <string name="RegSubmit">Register</string>
+    
+    <!-- String for Home Page -->
+    <string name="HomeFilter">Filter</string>
+    <string name="HomeItemName">Pramod Kumar Varma</string>
+    <string name="HomeItemAddress">C-279 New Ashok Nagar Delhi</string>
+    <string name="HomeItemDateTime">11 May 2014 (6:30 PM)</string>
+    
+    <!-- String for Friend Profile -->
+    <string name="FriendProfileName">Pramod Kumar Varma</string>
+    <string name="FriendProfileLocLable">Location</string>
+    <string name="FriendProfileDateTime">Date Time</string>
+    <string name="FriendProfileAddress">C-279 New Ashok Nagar Delhi</string>
+    <string name="FriendProfileGetLoc">Get Location</string>
+    <string name="FriendProfileSendSMS">Send SMS</string>
+    <string name="FriendProfileBlock">Block</string>
+    <string name="FriendProfileAdd">Add</string>
+    
+    <!-- String for User Profile -->
+    <string name="UserProfileFirstName">Pramod</string>
+    <string name="UserProfileLastName">Varma</string>
+    <string name="UserProfileEmail">vermapkg@gmail.com</string>
+    <string name="UserProfileMob">5436725346</string>
+    <string name="UserProfileCodeLabel">Code</string>
+    <string name="UserProfileCode">er45TysTgH</string>
+    <string name="UserProfileNewCode">Generate New Code</string>
+    
+    <!-- String for Search Item -->
+    <string name="SearchInput">Search Friends</string>
+    <string name="SearchItemName">Pramod Kumar Varma</string>
+    <string name="SearchItemAddSubmit">Add</string>
+    <string name="FriendProfileViewLoc">View Location On Map</string>
+    <string name="SearchItemBlock">Block</string>
+    <string name="SearchItemUnBlock">UnBlock</string>
+    
+
+</resources>

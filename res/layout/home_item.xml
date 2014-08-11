@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:weightSum="1.0" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight=".25"
+        android:gravity="center"
+        android:padding="5dp" >
+
+        <ImageView
+            android:id="@+id/ivHomeItemPic"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/images" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".75"
+        android:orientation="vertical"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/tvHomeItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/HomeItemName"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tvHomeItemAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/HomeItemAddress" />
+
+        <TextView
+            android:id="@+id/tvHomeItemDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/HomeItemDateTime" />
+
+    </LinearLayout>
+
+</LinearLayout>

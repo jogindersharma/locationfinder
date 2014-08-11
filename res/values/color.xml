@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#303030</color>
+    <color name="list_background_pressed">#992416</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+     <color name="white">#FFFFFF</color>
+         <color name="Charteuse">#7FFF00</color>
+    <color name="Maroon">#800000</color>
+    <color name="skyblue">#87CEEB</color>
+ 
+    <color name="whitesmoke">#F5F5F5</color>
+    <color name="SteelBlue">#4682B4</color>
+    <color name="Green">#008000</color>
+    <color name="Blue">#4682B4</color>
+    <color name="Yellow">#FFFF00</color>
+    <color name="green">#00FF6F</color>
+    <color name="Gray">#808080</color>
+    <color name="Silver">#C0C0C0</color>
+    <color name="litegreen">#CCFF99</color>
+    <color name="DarkSlateGray">#2F4F4F</color>
+    <color name="LightCyan">#E0FFFF</color>
+    <color name="A">#006666</color>
+    <color name="B">#003333</color>
+    <color name="C">#009999</color>
+    <color name="Teal">#008080</color>
+    <color name="lightgray">#e7e7e7</color>
+    <color name="lightgray02">#bfbfbf</color>
+    <color name="orrange">#e33d1b</color>
+    <color name="dark_green">#008000</color>
+    <color name="inactiv">#004225</color>
+    <color name="activ">#F0F8FF</color>
+    <color name="Black">#000000</color>
+    <color name="PineGreen">#01796F</color>
+    <color name="DarkCyan">#008B8B</color>
+    <color name="TransParent">#00000000</color>
+    <color name="sgibrightgray">#C5C1AA</color>
+</resources>

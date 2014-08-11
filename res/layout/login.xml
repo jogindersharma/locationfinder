@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/android"
+    android:weightSum="1.0" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight=".1" >
+
+        <TextView
+            android:id="@+id/tv_LoginHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:text="@string/LoginHeader"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+    
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight=".7" >
+
+               <ImageView
+                   android:id="@+id/imgv_LoginLock"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:src="@drawable/lock_46x46" />
+
+           <TextView
+            android:id="@+id/tv_LoginSubHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/LoginSubHeader"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/edt_LoginEmail"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:hint="@string/LoginEmail"
+                android:background="@android:color/white"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" >
+                
+            </EditText>
+            
+            <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="2dp"
+               android:background="@color/Blue" >
+            </LinearLayout>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/edt_LoginPass"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:hint="@string/LoginPass"
+                android:background="@android:color/white"
+                android:inputType="textPassword"
+                android:singleLine="true" >
+                
+            </EditText>
+            
+            <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="2dp"
+               android:background="@color/Blue" >
+            </LinearLayout>
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" >
+
+            <Button
+                android:id="@+id/btn_LoginSubmit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/LoginSubmit"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        
+        <TextView
+           android:id="@+id/textView3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_marginTop="10dp"
+           android:text="@string/LoginSuggReg"
+           android:textStyle="bold" />
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="5dp" >
+
+            <Button
+                android:id="@+id/btn_LoginRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/LoginRegister"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        
+        </LinearLayout>   
+        
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight=".2" >
+
+    </LinearLayout>
+</LinearLayout>        
