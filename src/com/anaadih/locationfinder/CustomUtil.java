@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.anaadih.locationfinder.Login.UserLoginInterface;
 import com.anaadih.locationfinder.networking.NetworkStatus;
 
 import retrofit.Callback;
@@ -197,11 +195,13 @@ public class CustomUtil {
 					} else if(success.equalsIgnoreCase("0")) {
 						String message = jsonResult.getString("message");
 						Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", "Please try after Some Time.");
 					} else if(success.equalsIgnoreCase("1")){
 						//String message = jsonResult.getString("message");
 						//int userId = jsonResult.getInt("userId");
 						//storeUserId(userId);
 						//CustomUtil.getInstance(context).goToUserHome();
+						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Success", "Friend Request Sent Successfully.");
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

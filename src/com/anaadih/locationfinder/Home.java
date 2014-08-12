@@ -76,7 +76,8 @@ public class Home extends Activity {
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
-		
+		// Recieve Request of friends 
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
@@ -182,13 +183,17 @@ public class Home extends Activity {
 		case 3:
 			fragment = new SelfProfileFragment();
 			break;
-		/*
 		case 4:
-			fragment = new PagesFragment();
+			fragment = new FriendProfileFragment();
 			break;
+			
 		case 5:
-			fragment = new WhatsHotFragment();
-			break;*/
+			fragment = new TrackFrdLocationFragment();
+			break;
+
+		case 6:
+			fragment = new ReceiveRequest();
+			break;
 
 		default:
 			break;

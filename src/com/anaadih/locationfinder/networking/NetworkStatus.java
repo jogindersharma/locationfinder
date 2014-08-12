@@ -52,4 +52,21 @@ public class NetworkStatus {
 		AlertDialog alertdialog=builder.create();
 		alertdialog.show();
 	}
+    
+    public void showDefaultAlertDialog(Context activitityContext, String title, String Message) {
+		AlertDialog.Builder builder=new AlertDialog.Builder(activitityContext);
+		builder.setTitle(title);
+		builder.setMessage(Message);
+		builder.setCancelable(false);
+		builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {	 
+				
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
+		
+		AlertDialog alertdialog=builder.create();
+		alertdialog.show();
+	}
 }

@@ -27,9 +27,10 @@
         <item >Home</item>
         <item >Find People</item> 
         <item >Friends</item>
-        <item >Communities</item>
-        <item >Pages</item>
-        <item >What\'s Hot</item>
+        <item >Profile</item>
+        <item >Get location</item>
+        <item >Location</item>
+        <item >Receive Request</item>
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->
@@ -41,6 +42,7 @@
         <item>@drawable/ic_communities</item>
         <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>
+        <item>@drawable/ic_people</item>
     </array>
     
     <!-- Content Description -->
@@ -105,4 +107,7 @@
         <item name="searchByOptions2">By Email</item>
         <item name="searchByOptions3">By Mobile No.</item>
     </string-array>
+    
+    <string name="receiverequestrejectbtn">Reject</string>
+    <string name="receiverequestblockbtn">Block</string>
 </resources>
