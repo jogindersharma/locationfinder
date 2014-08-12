@@ -17,8 +17,6 @@ import retrofit.client.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
-
-import com.anaadih.locationfinder.Login.UserLoginInterface;
 import com.anaadih.locationfinder.adapter.SearchListAdapter;
 import com.anaadih.locationfinder.dto.SearchDataItem;
 import com.anaadih.locationfinder.networking.NetworkStatus;
@@ -84,7 +82,7 @@ public class SearchFragment extends Fragment {
         context = container.getContext();
         initializer(rootView);
         
-        rowItemsList = new ArrayList<SearchDataItem>() ;
+        /*rowItemsList = new ArrayList<SearchDataItem>() ;
 		name = new String [] { "Amit Groch", "Joginder Sharma", "Pramod Kumar Varma", "Jitendra Kumar Yadav", "Pradeep Singh Gusian",
 				"Anil Kumar Vishwakarma", "Pankaj Kumar Sharma", "Rajesh Kumar", "Ashok Kumar", "Pradeep Pandey" } ;
 
@@ -105,7 +103,7 @@ public class SearchFragment extends Fragment {
 				// TODO Auto-generated method stub
 				Toast.makeText(getActivity(), "Add Friend Here...", Toast.LENGTH_SHORT).show();
 			}
-		});
+		});*/
 		
         return rootView;    
     }
@@ -186,7 +184,8 @@ public class SearchFragment extends Fragment {
     	  
     	  @Override
     	  public void failure(RetrofitError result) {
-    		  Log.e("Retrofit Error ",result.getMessage());
+    		  //Log.e("Retrofit Error ",result.getMessage());
+    		  Log.e("Retrofit Error ",result.toString());
     		CustomUtil.getInstance(context).hideDialogBox();
     	  }
     	  
@@ -221,6 +220,7 @@ public class SearchFragment extends Fragment {
   					} else if(success.equalsIgnoreCase("1")){
   						String message = jsonResult.getString("message");
   						friendListJsonArray = jsonResult.getJSONArray("friendList");
+  						addDataToList();
   					}
   				} catch (JSONException e) {
   					// TODO Auto-generated catch block
@@ -232,5 +232,39 @@ public class SearchFragment extends Fragment {
     	    CustomUtil.getInstance(context).hideDialogBox();
     	  }
     };
+    public void addDataToList() throws JSONException {
+    	if(friendListJsonArray != null) {
+    		
+    		int totalArrayCount = friendListJsonArray.length();
+    		
+    		rowItemsList = new ArrayList<SearchDataItem>() ;
+    		
+            for (int i = 0 ; i < totalArrayCount; i ++) {
+            	
+            	JSONObject currUserJsonObj = friendListJsonArray.getJSONObject(i);
+            	
+            	int currUserId = currUserJsonObj.getInt("user_id");
+            	String currUserName = currUserJsonObj.getString("user_firstname")+" "+
+            						currUserJsonObj.getString("user_lastname");
+            	String currImageName = currUserJsonObj.getString("image_name");
+            		
+            	SearchDataItem items = new SearchDataItem(currUserId,currUserName,
+            			currImageName);
+    			rowItemsList.add(items) ;
+    		}	
+            
+    		adapter = new SearchListAdapter(getActivity(), rowItemsList);
+    		lvSearchAllList.setAdapter(adapter);
+    		
+    		adapter.setOnViewButtonClickedListener(new SearchListAdapter.OnViewButtonClickedListener() {
+    			
+    			@Override
+    			public void OnAdd(String id) {
+    				// TODO Auto-generated method stub
+    				Toast.makeText(getActivity(), "Add Friend Here..."+id, Toast.LENGTH_SHORT).show();
+    			}
+    		});
+    	}
+    }
 }
 

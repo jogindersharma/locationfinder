@@ -7,6 +7,7 @@ public class StaticStrings {
 	public static final String USER_REGISTER_URL = "/joginder/locationfinder/webservices/register.php";
 	public static final String USER_LOGIN_URL = "/joginder/locationfinder/webservices/login.php";
 	public static final String Find_FRIENDS_URL = "/joginder/locationfinder/webservices/findfriends.php";
+	public static final String SEND_FRIENDS_REQUEST_URL = "/joginder/locationfinder/webservices/sendfriendrequest.php";
 	
 	public static final String USER_ID = "userId";
 	public static final String DEVICE_GCM_ID = "deviceGcmId";

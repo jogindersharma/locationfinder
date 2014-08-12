@@ -1,15 +1,30 @@
 package com.anaadih.locationfinder;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.anaadih.locationfinder.Login.UserLoginInterface;
+import com.anaadih.locationfinder.networking.NetworkStatus;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.POST;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 public class CustomUtil {
 	
@@ -18,6 +33,13 @@ public class CustomUtil {
 	String TAG = "CustomUtil";
 	static SharedPreferences prefs;
 	ProgressDialog pDialog;
+	
+	// Retrofit Variables
+	Response responseObj;
+	String responseString;
+	JSONObject jsonResult;
+	RestAdapter restAdapter;
+	SendFriendRequestInterface sendRequestObj;
 	
 	public static CustomUtil getInstance(Context ctx) {
         context = ctx;
@@ -110,4 +132,85 @@ public class CustomUtil {
     	}
     }
 	
+    public void sendFriendRequest(int userId, int friendId) {
+    	Log.e("inside sendFriendRequest", String.valueOf(userId)+" "+String.valueOf(friendId));
+    	
+    	restAdapter = new RestAdapter.Builder()
+        .setEndpoint(StaticStrings.SITE_URL)
+        .setLogLevel(RestAdapter.LogLevel.FULL)
+        .build();
+        
+        if (NetworkStatus.getInstance(context).isInternetAvailable(context)) {
+    		Log.e(TAG, "Internet is available");
+    		CustomUtil.getInstance(context).showDialogBox("Friend Request", "Sending Friend Request...");
+    		
+    		sendRequestObj = restAdapter.create(SendFriendRequestInterface.class);
+    		sendRequestObj.sendRequest(userId, friendId, sendFriendRequestCallback);
+    	} else {
+    		Log.e(TAG, "##########You are not online!!!!");
+    		NetworkStatus.getInstance(context).showDefaultNoInternetDialog(context);
+    	}
+    }
+    
+    interface SendFriendRequestInterface {
+		@FormUrlEncoded
+		@POST(StaticStrings.SEND_FRIENDS_REQUEST_URL)
+		void sendRequest(
+				@Field("userId") int userId, 
+				@Field("friendId") int friendId,
+				Callback<Response> sendFriendRequestCallback);
+	}
+    
+    Callback<Response> sendFriendRequestCallback = new Callback<Response>() {
+  	  
+  	  @Override
+  	  public void failure(RetrofitError result) {
+  		  Log.e("Retrofit Error ",result.getMessage());
+  		CustomUtil.getInstance(context).hideDialogBox();
+  	  }
+  	  
+  	  @Override
+  	  public void success(Response result, Response response) {
+  		  BufferedReader reader = null;
+  	      StringBuilder sb = new StringBuilder();
+  	      try {
+  	          reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+  	          String line;
+  	          try {
+  	              while ((line = reader.readLine()) != null) {
+  	                  sb.append(line);
+  	              }
+  	          } catch (IOException e) {
+  	              e.printStackTrace();
+  	          }
+  	      } catch (IOException e) {
+  	          e.printStackTrace();
+  	      }
+  	      responseString = sb.toString();
+  	      if(CustomUtil.getInstance(context).isJSONValid(responseString)) {
+  	    	Log.e("SeverResponse=>", responseString);
+	  	    	try {
+					jsonResult = new JSONObject(responseString);
+					String success = jsonResult.getString("success");
+					if(success == null) {
+						Log.e("SeverResponse=>", "success variable is null");
+					} else if(success.equalsIgnoreCase("0")) {
+						String message = jsonResult.getString("message");
+						Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+					} else if(success.equalsIgnoreCase("1")){
+						//String message = jsonResult.getString("message");
+						//int userId = jsonResult.getInt("userId");
+						//storeUserId(userId);
+						//CustomUtil.getInstance(context).goToUserHome();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+  	      } else {
+  	    	Log.e("SeverResponse=>", "is not a JSON =>"+responseString);
+  	      }
+  	    CustomUtil.getInstance(context).hideDialogBox();
+  	  }
+  	};
 }

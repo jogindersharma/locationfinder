@@ -2,11 +2,13 @@ package com.anaadih.locationfinder.adapter;
 
 import java.util.List;
 
+import com.anaadih.locationfinder.CustomUtil;
 import com.anaadih.locationfinder.R;
 import com.anaadih.locationfinder.dto.SearchDataItem;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,24 +65,38 @@ public class SearchListAdapter extends BaseAdapter {
 	    	
 	    	convertView = mInflater.inflate(R.layout.search_item, null);
 	        holder = new ViewHolder();
-	         
+	    
 	        holder.tvSearchItemName = (TextView) convertView.findViewById(R.id.tvSearchItemName);
 	        holder.ivSearchItemPic = (ImageView) convertView.findViewById(R.id.ivSearchItemPic);
 	        holder.btnSearchItemAdd = (Button) convertView.findViewById(R.id.btnSearchItemAdd);
 	        holder.tgbtnSearchItemBlock = (ToggleButton) convertView.findViewById(R.id.tgbtnSearchItemBlock);
 	         
 	        convertView.setTag(holder);        
-	    } else
+	    } else {
 	    	holder = (ViewHolder) convertView.getTag();	                 
-	        holder.tvSearchItemName.setText(rowItem.getName());
-	        holder.ivSearchItemPic.setImageResource(rowItem.getImage());
+	    }
+	    	holder.friendId = rowItem.getUserId();
+	    	holder.tvSearchItemName.setText(rowItem.getName());
+	        holder.ivSearchItemPic.setImageResource(R.drawable.bmw);
+	        
+	        final ViewHolder fianlHolder = holder;
 	        
 	        holder.btnSearchItemAdd.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					listener.OnAdd(""+v.getId());
+					//listener.OnAdd(""+v.getId());
+					Log.e("inSideAdapter", "Add Btn");
+					int userId = CustomUtil.getInstance(context).getUserId();
+					CustomUtil.getInstance(context).sendFriendRequest(userId,fianlHolder.friendId);
+				}
+			});
+	        
+	        holder.tgbtnSearchItemBlock.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Log.e("inSideAdapter", "Block Btn");
 				}
 			});
 	        
@@ -97,5 +113,6 @@ public class SearchListAdapter extends BaseAdapter {
 		TextView tvSearchItemName ;	
 		Button btnSearchItemAdd ;
 		ToggleButton tgbtnSearchItemBlock ;
+		int friendId;
 	}
 }
