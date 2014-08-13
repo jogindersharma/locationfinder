@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,8 +21,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.anaadih.locationfinder.CustomUtil.SendFriendRequestInterface;
-import com.anaadih.locationfinder.Login.UserLoginInterface;
 import com.anaadih.locationfinder.networking.NetworkStatus;
 
 public class MyNetworkClass {
@@ -37,9 +36,11 @@ public class MyNetworkClass {
 	String responseString;
 	JSONObject jsonResult;
 	static RestAdapter restAdapter;
+	
 	// Interface Variablee
 	TestInterface testInterfaceObj;
 	RequestResponseInterface reqResObj;
+	
 	
 	public static MyNetworkClass getInstance(Context ctx) {
         context = ctx;
@@ -62,28 +63,31 @@ public class MyNetworkClass {
 				Callback<Response> requestCallback);
 	}
 	
+/* ++++++++++++++++ ============  Received Friend Request Response ==========*/
+	
 	interface RequestResponseInterface {
 		@FormUrlEncoded
-		@POST(StaticStrings.SEND_FRIENDS_REQUEST_URL)
+		@POST(StaticStrings.REQUEST_RESPONSE_URL)
 		void sendReqResponse(
+				@Field("userId") int userId,
 				@Field("friendId") int friendId,
-				@Field("responseCode") int userId,
+				@Field("responseCode") int responseCode,
 				Callback<Response> requestCallback);
 	}
 	
 	public void requestResponse(int friendId, int responseCode) {
 		if (NetworkStatus.getInstance(context).isInternetAvailable(context)) {
     		Log.e(TAG, "Internet is available");
-    		CustomUtil.getInstance(context).showDialogBox("User Login", "Login ...");
+    		CustomUtil.getInstance(context).showDialogBox("Server Connection", "Updating Your Response on Server...");
+    		int userId = CustomUtil.getInstance(context).getUserId();
     		
     		reqResObj = restAdapter.create(RequestResponseInterface.class);
-    		reqResObj.sendReqResponse(friendId, responseCode, requestCallback);
+    		reqResObj.sendReqResponse(userId, friendId, responseCode, requestCallback);
     	} else {
     		Log.e(TAG, "##########You are not online!!!!");
     		NetworkStatus.getInstance(context).showDefaultNoInternetDialog(context);
     	}
 	}
-	
 	
 	Callback<Response> requestCallback = new Callback<Response>() {
 	  	  
@@ -121,13 +125,13 @@ public class MyNetworkClass {
 						} else if(success.equalsIgnoreCase("0")) {
 							String message = jsonResult.getString("message");
 							Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", "Please try after Some Time.");
+							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
 						} else if(success.equalsIgnoreCase("1")){
-							//String message = jsonResult.getString("message");
+							String message = jsonResult.getString("message");
 							//int userId = jsonResult.getInt("userId");
 							//storeUserId(userId);
 							//CustomUtil.getInstance(context).goToUserHome();
-							//NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Success", "Friend Request Sent Successfully.");
+							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Success", message);
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -139,4 +143,6 @@ public class MyNetworkClass {
 	  	    CustomUtil.getInstance(context).hideDialogBox();
 	  	  }
 	  	};
+	  	
+
 }

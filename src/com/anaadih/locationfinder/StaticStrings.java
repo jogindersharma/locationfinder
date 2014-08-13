@@ -11,6 +11,8 @@ public class StaticStrings {
 	public static final String GET_USER_DETAILS = "/joginder/locationfinder/webservices/userprofile.php";
 	public static final String UPDATE_USER_DETAILS = "/joginder/locationfinder/webservices/update_user_profile.php";
 	public static final String RECEIVE_REQUEST_URL="/joginder/locationfinder/webservices/receivedrequest.php";
+	public static final String REQUEST_RESPONSE_URL="/joginder/locationfinder/webservices/requestresponse.php";
+	public static final String GET_FRIEND_LIST = "/joginder/locationfinder/webservices/getfriendlist.php";
 	
 	
 	public static final String USER_ID = "userId";

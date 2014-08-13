@@ -74,8 +74,12 @@
     <string name="HomeItemAddress">C-279 New Ashok Nagar Delhi</string>
     <string name="HomeItemDateTime">11 May 2014 (6:30 PM)</string>
     
+     <!-- String for Friend List Page -->
+    <string name="FriendListItemName">Joginder Sharma</string>
+    
+    
     <!-- String for Friend Profile -->
-    <string name="FriendProfileName">Pramod Kumar Varma</string>
+    <string name="FriendProfileName">Name Varma</string>
     <string name="FriendProfileLocLable">Location</string>
     <string name="FriendProfileDateTime">Date Time</string>
     <string name="FriendProfileAddress">C-279 New Ashok Nagar Delhi</string>
@@ -83,6 +87,7 @@
     <string name="FriendProfileSendSMS">Send SMS</string>
     <string name="FriendProfileBlock">Block</string>
     <string name="FriendProfileAdd">Add</string>
+    <string name="FriendListCircleName">Circle Name</string>
     
     <!-- String for User Profile -->
     <string name="UserProfileFirstName">Pramod</string>

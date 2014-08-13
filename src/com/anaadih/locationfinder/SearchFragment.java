@@ -44,8 +44,6 @@ public class SearchFragment extends Fragment {
 	private Spinner spnrSearch ;
 	private SearchListAdapter adapter ;
 	private List<SearchDataItem> rowItemsList ;
-	private String[] name ;
-	private int[] profImage ;
 	String TAG ="inside SearchFragment";
 	String searchInputVal;
 	Context context;
@@ -82,29 +80,6 @@ public class SearchFragment extends Fragment {
         context = container.getContext();
         initializer(rootView);
         
-        /*rowItemsList = new ArrayList<SearchDataItem>() ;
-		name = new String [] { "Amit Groch", "Joginder Sharma", "Pramod Kumar Varma", "Jitendra Kumar Yadav", "Pradeep Singh Gusian",
-				"Anil Kumar Vishwakarma", "Pankaj Kumar Sharma", "Rajesh Kumar", "Ashok Kumar", "Pradeep Pandey" } ;
-
-		profImage = new int[] { R.drawable.images, R.drawable.saab, R.drawable.bmw, R.drawable.images, R.drawable.saab, 
-				R.drawable.bmw, R.drawable.images, R.drawable.saab, R.drawable.bmw, R.drawable.images } ;
-        
-        for (int i = 0 ; i < name .length ; i ++) {
-        	SearchDataItem items = new SearchDataItem(name[i], profImage[i]) ;
-			rowItemsList.add(items) ;
-		}		
-		adapter = new SearchListAdapter(getActivity(), rowItemsList);
-		lvSearchAllList.setAdapter(adapter);
-		
-		adapter.setOnViewButtonClickedListener(new SearchListAdapter.OnViewButtonClickedListener() {
-			
-			@Override
-			public void OnAdd(String id) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(), "Add Friend Here...", Toast.LENGTH_SHORT).show();
-			}
-		});*/
-		
         return rootView;    
     }
 	

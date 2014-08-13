@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.anaadih.locationfinder.MyNetworkClass;
 import com.anaadih.locationfinder.R;
 import com.anaadih.locationfinder.dto.ReceiveRequestDto;
@@ -21,8 +20,6 @@ public class ReceiveRequestAdapter extends BaseAdapter {
 	
 	private Context context ;
 	private List<ReceiveRequestDto> rowItems ;
-	
-	private OnViewButtonClickedListener listener;
 	
 	public interface OnViewButtonClickedListener {
         public void OnAdd(String id);
@@ -72,36 +69,37 @@ public class ReceiveRequestAdapter extends BaseAdapter {
 	        convertView.setTag(holder);        
 	    } else
 	    	holder = (ViewHolder) convertView.getTag();	                 
-	        holder.tvreceiverequestName.setText(rowItem.getName());
+	        
+	    	holder.friendId = rowItem.getUserId();
+	    	holder.tvreceiverequestName.setText(rowItem.getName());
 	        holder.ivreceiverequestPic.setImageResource(R.drawable.bmw);
+	        
+	        final ViewHolder fianlHolder = holder;
 	        
 	        holder.btnreceiverequestadd.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					MyNetworkClass.getInstance(context).requestResponse(friendId, responseCode);
+					MyNetworkClass.getInstance(context).requestResponse(fianlHolder.friendId, 3);
 				}
 			});
+	        holder.btnreceiverequestreject.setOnClickListener(new OnClickListener() {
+	        	@Override
+	        	public void onClick(View v) {
+	        		MyNetworkClass.getInstance(context).requestResponse(fianlHolder.friendId, 4);
+	        	}
+	        });
+	        
 	        holder.btnreceiverequestblock.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					
+					MyNetworkClass.getInstance(context).requestResponse(fianlHolder.friendId, 5);
 				}
 			});
-	        holder.btnreceiverequestreject.setOnClickListener(new OnClickListener() {
-	
-	        	@Override
-	        	public void onClick(View v) {
-	        		
-	        	}
-	        });
+	        
 	        
 	        return convertView;
 	}
-	
-	public void setOnViewButtonClickedListener(OnViewButtonClickedListener listener) {
-        this.listener = listener;
-    }
 	
 	//private view holder class 
 	private class ViewHolder {

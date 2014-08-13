@@ -205,15 +205,6 @@ public class ReceiveRequest extends Fragment {
             
     		adapter = new ReceiveRequestAdapter(getActivity(), receiveRequestlist);
     		lvreceivefrdrequest.setAdapter(adapter);
-    		
-    		adapter.setOnViewButtonClickedListener(new ReceiveRequestAdapter.OnViewButtonClickedListener() {
-    			
-    			@Override
-    			public void OnAdd(String id) {
-    				// TODO Auto-generated method stub
-    				Toast.makeText(getActivity(), "Add Friend Here..."+id, Toast.LENGTH_SHORT).show();
-    			}
-    		});
     	}
     }
 	
