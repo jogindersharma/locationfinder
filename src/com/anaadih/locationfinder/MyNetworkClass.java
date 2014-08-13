@@ -93,7 +93,7 @@ public class MyNetworkClass {
 	  	  
 	  	  @Override
 	  	  public void failure(RetrofitError result) {
-	  		  Log.e("Retrofit Error ",result.getMessage());
+	  		  Log.e("Retrofit Error ","Error in server response.");
 	  		CustomUtil.getInstance(context).hideDialogBox();
 	  	  }
 	  	  

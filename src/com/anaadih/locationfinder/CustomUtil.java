@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.anaadih.locationfinder.networking.NetworkStatus;
-
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -163,7 +162,7 @@ public class CustomUtil {
   	  
   	  @Override
   	  public void failure(RetrofitError result) {
-  		  Log.e("Retrofit Error ",result.getMessage());
+  		  Log.e("Retrofit Error ","Error in sending Friend Request.");
   		CustomUtil.getInstance(context).hideDialogBox();
   	  }
   	  
@@ -204,7 +203,6 @@ public class CustomUtil {
 						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Success", "Friend Request Sent Successfully.");
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
   	      } else {

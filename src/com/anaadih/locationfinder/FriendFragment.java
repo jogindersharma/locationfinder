@@ -77,42 +77,8 @@ public class FriendFragment extends Fragment {
         fragmentManager = getFragmentManager();
         
         initializer(rootView);
-        /*
-        rowItemsList = new ArrayList<HomeDataItem>() ;
-		name = new String [] { "Amit Groch", "Joginder Sharma", "Pramod Kumar Varma", "Jitendra Kumar Yadav", "Pradeep Singh Gusian",
-				"Anil Kumar Vishwakarma", "Pankaj Kumar Sharma", "Rajesh Kumar", "Ashok Kumar", "Pradeep Pandey" } ;
-		group = new String [] {"Faimily", "Friend", "Collegue", "faimily", "Friend", "Office", "Relative", "Nighbour", "Friend", "Faimily" } ;
-		address = new String [] { "Indira Puram", "Anaadih Softech", "C-279 New Ashok Nagar", "nKaps Intellect", "Subharti University",
-				"Migital Magic", "Clavax India", "Innovative AIIMS", "Fransccicon India", "Tata Consultancy Services (TCS)" } ;
-		datetime = new String [] {"11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)",
-				"11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)"} ;
-		profImage = new int[] { R.drawable.images, R.drawable.saab, R.drawable.bmw, R.drawable.images, R.drawable.saab, 
-				R.drawable.bmw, R.drawable.images, R.drawable.saab, R.drawable.bmw, R.drawable.images } ;
-        
-        for (int i = 0 ; i < name .length ; i ++)
-		{
-        	HomeDataItem items = new  HomeDataItem(name[i], group[i], address[i], datetime[i], profImage[i]) ;
-			rowItemsList.add(items) ;
-		}		
-		adapter = new HomeListAdapter(getActivity(), rowItemsList);
-		lvHomeAllList.setAdapter(adapter);
-		*/
         getFriendList();
         
-        lvFriendList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				SearchResultFragment fr = new SearchResultFragment();
-				FragmentTransaction ft = fragmentManager.beginTransaction();
-				ft.replace(R.id.frame_container, fr);
-				ft.addToBackStack(SearchResultFragment.class.getName());
-				ft.commit();
-			}
-		});
-		
         return rootView;    
     }
 	
@@ -126,12 +92,26 @@ public class FriendFragment extends Fragment {
 		lvFriendList = (ListView) rootView.findViewById(R.id.lvFriendList);
 		btnHomeFilter = (Button) rootView.findViewById(R.id.btnHomeFilter);
 		spnrHome = (Spinner) rootView.findViewById(R.id.spnrHome);
+		
+		lvFriendList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				FriendProfileFragment fr = new FriendProfileFragment();
+				FragmentTransaction ft = fragmentManager.beginTransaction();
+				ft.replace(R.id.frame_container, fr);
+				ft.addToBackStack(FriendProfileFragment.class.getName());
+				ft.commit();
+			}
+		});
     }
 	/* ++++++++++++++++ ============  GET Friend List  ==========*/
 	
 	interface GetFriendListInterface {
 		@FormUrlEncoded
-		@POST(StaticStrings.REQUEST_RESPONSE_URL)
+		@POST(StaticStrings.GET_FRIEND_LIST)
 		void getFriends(
 				@Field("userId") int userId,
 				Callback<Response> getFriendListCallback);
@@ -161,7 +141,7 @@ public class FriendFragment extends Fragment {
 	  	  
 	  	  @Override
 	  	  public void failure(RetrofitError result) {
-	  		  Log.e("Retrofit Error ",result.getMessage());
+	  		  Log.e("Retrofit Error ","Error in fetching Friend list.");
 	  		CustomUtil.getInstance(context).hideDialogBox();
 	  	  }
 	  	  
@@ -200,7 +180,6 @@ public class FriendFragment extends Fragment {
 							sendFriendListToAdapter(friendList);
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 	  	      } else {
@@ -212,25 +191,20 @@ public class FriendFragment extends Fragment {
 	  	
 	  	public void sendFriendListToAdapter(JSONArray friendList) throws JSONException {
 	  		if(friendList != null) {
-	  			
 	  			rowItemsList = new ArrayList<FriendListDataItem>() ;
 	    		int totalArrayCount = friendList.length();
-	    		
 	            for (int i = 0 ; i < totalArrayCount; i ++) {
-	            	
 	            	JSONObject currUserJsonObj = friendList.getJSONObject(i);
 	            	
 	            	int currUserId = currUserJsonObj.getInt("user_id");
 	            	String currUserName = currUserJsonObj.getString("user_firstname")+" "+
 	            						currUserJsonObj.getString("user_lastname");
 	            	String currImageName = currUserJsonObj.getString("image_name");
-	            	String currGroupName = "Test";
-	            		
+	            	String currGroupName = currUserJsonObj.getString("group_name");
 	            	FriendListDataItem items = new FriendListDataItem(currUserId,currUserName,currGroupName,
 	            			currImageName);
 	    			rowItemsList.add(items) ;
-	    		}	
-	            
+	    		}
 	    		adapter = new FriendListAdapter(getActivity(), rowItemsList);
 	    		lvFriendList.setAdapter(adapter);
 	    	}

@@ -207,7 +207,5 @@ public class ReceiveRequest extends Fragment {
     		lvreceivefrdrequest.setAdapter(adapter);
     	}
     }
-	
-
 }
 

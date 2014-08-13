@@ -108,7 +108,8 @@ public class Login extends Activity {
     	  
     	  @Override
     	  public void failure(RetrofitError result) {
-    		  Log.e("Retrofit Error ",result.getMessage());
+    		  //Log.e("Retrofit Error ",result.getMessage());
+    		  Log.e("Retrofit Error ","Error in Server Response");
     		CustomUtil.getInstance(context).hideDialogBox();
     	  }
     	  

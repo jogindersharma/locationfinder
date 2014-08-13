@@ -45,17 +45,12 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		 View rootView = inflater.inflate(R.layout.activity_user_profile, container, false);
-		
-		 initization(rootView);
-		 
+		 initization(rootView);		 
 		 rootView.setClickable(true);
 		 getProfile();
-		 
 		return rootView;
 	}
-
 	
 	public void initization(View rootview) {
 		imUserProfile = (ImageView) rootview.findViewById(R.id.ivUserProfilePic);
