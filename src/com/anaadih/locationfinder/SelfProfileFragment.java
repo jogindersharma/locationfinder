@@ -284,6 +284,8 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 
 	case R.id.ivUserProfilePic:
 		Toast.makeText(Home.context, "pic", Toast.LENGTH_SHORT).show();
+		Intent changePic = new Intent(Home.context,ProfileImageUpdater.class);
+		startActivity(changePic);
 		break;
 	case R.id.ivUserProfileEmailEdit:
 		Toast.makeText(Home.context, "email", Toast.LENGTH_SHORT).show();

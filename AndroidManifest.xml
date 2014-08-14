@@ -41,6 +41,7 @@
         <activity android:name="com.anaadih.locationfinder.Home" />  
         <activity android:name="com.anaadih.locationfinder.Login" />
         <activity android:name="com.anaadih.locationfinder.Register" />
+        <activity android:name="com.anaadih.locationfinder.ProfileImageUpdater" />
         <receiver
             android:name="com.anaadih.locationfinder.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
