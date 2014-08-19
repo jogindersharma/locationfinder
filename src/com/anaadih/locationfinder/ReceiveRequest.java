@@ -109,7 +109,8 @@ public class ReceiveRequest extends Fragment {
 	public void initializer(View rootView) {
 		lvreceivefrdrequest = (ListView) rootView.findViewById(R.id.lvreceivefrdrequest);
     }
-		public void findFriendsTask() {
+	
+	public void findFriendsTask() {
     	
         restAdapter = new RestAdapter.Builder()
         .setEndpoint(StaticStrings.SITE_URL)

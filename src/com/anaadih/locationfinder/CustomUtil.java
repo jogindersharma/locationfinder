@@ -1,13 +1,16 @@
 package com.anaadih.locationfinder;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.anaadih.locationfinder.networking.NetworkStatus;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -20,6 +23,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -211,4 +217,24 @@ public class CustomUtil {
   	    CustomUtil.getInstance(context).hideDialogBox();
   	  }
   	};
+  	
+  	public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream ByteStream=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, ByteStream);
+        byte [] b=ByteStream.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;      
+    }
+    
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+        	byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;           
+        } catch(Exception e) {
+        	e.getMessage();
+            return null;           
+        }       
+    }
+    
 }

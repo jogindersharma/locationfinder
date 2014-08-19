@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/sgibrightgray" >
+    
+    <LinearLayout
+        android:id="@+id/mylayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".MainActivity" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/Blue" >
+
+            <TextView
+                android:id="@+id/tvProfileImageUpdateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ImageUpdateLabel"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="10dp" >
+
+            <com.edmodo.cropper.CropImageView
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ivProfileImageUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <Button
+                android:id="@+id/btnProfileImageUpdateGallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ProfileImageUpdateGallery"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/Blue" />
+
+            <Button
+                android:id="@+id/btnProfileImageUpdateCamera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ProfileImageUpdateCamera"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/Blue" />
+        
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1.0"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:baselineAligned="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:orientation="vertical"
+                android:layout_marginRight="5dp"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/btnProfileImageUpdateRotate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ProfileImageUpdateRotate"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@color/Blue" />
+            
+            </LinearLayout>
+        
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:orientation="vertical"
+                android:layout_marginLeft="5dp"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/btnProfileImageUpdatePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ProfileImageUpdatePreview"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@color/Blue" />
+            
+            </LinearLayout>
+                
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/ivProfileImageUpdatePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/images" />
+        
+        </LinearLayout>
+    
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <Button
+                android:id="@+id/btnProfileImageUpdateSetProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ProfileImageUpdateSetProfile"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/Blue" />
+        
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</ScrollView>

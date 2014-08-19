@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.anaadih.locationfinder.networking.NetworkStatus;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -50,6 +52,7 @@ public class Login extends Activity {
 		void userLogin(
 				@Field("userEmailId") String userEmailId, 
 				@Field("userPassword") String userPassword,
+				@Field("deviceGcmId") String deviceGcmId,
 				Callback<Response> userLoginCallback);
 	}
     
@@ -95,9 +98,10 @@ public class Login extends Activity {
         if (NetworkStatus.getInstance(this).isInternetAvailable(this)) {
     		Log.e(TAG, "Internet is available");
     		CustomUtil.getInstance(this).showDialogBox("User Login", "Login ...");
-    		
+    		String deviceGcmId = CustomUtil.getInstance(this).getSharedPrefObj()
+    				.getString(StaticStrings.DEVICE_GCM_ID, "");
     		userRegisterObj = restAdapter.create(UserLoginInterface.class);
-    		userRegisterObj.userLogin(loginEmailVal, loginPassVal, userLoginCallback);
+    		userRegisterObj.userLogin(loginEmailVal, loginPassVal,deviceGcmId, userLoginCallback);
     	} else {
     		Log.e(TAG, "##########You are not online!!!!");
     		NetworkStatus.getInstance(this).showDefaultNoInternetDialog(this);

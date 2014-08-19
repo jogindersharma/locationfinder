@@ -115,4 +115,12 @@
     
     <string name="receiverequestrejectbtn">Reject</string>
     <string name="receiverequestblockbtn">Block</string>
+    
+    <!-- String for Profile Image Update -->
+    <string name="ImageUpdateLabel">Profile Image Update</string>
+    <string name="ProfileImageUpdateCamera">Take From Camera</string>
+    <string name="ProfileImageUpdateGallery">Select From Gallery</string>
+    <string name="ProfileImageUpdateRotate">Rotate</string>
+    <string name="ProfileImageUpdatePreview">Preview</string>
+    <string name="ProfileImageUpdateSetProfile">Set Profile</string>
 </resources>

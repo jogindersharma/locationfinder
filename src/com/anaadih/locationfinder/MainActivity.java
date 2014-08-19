@@ -125,6 +125,8 @@ public class MainActivity extends ActionBarActivity {
 	        		CustomUtil.getInstance(context).goToUserHome();
 	        	} else {
 	        		Log.e(TAG, "regid is blank or null");
+	        		NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Error", "Error: Please Re-Open this app.");
+	        		finish();
 	        	}
 	        }
 	    }.execute(null, null, null);
