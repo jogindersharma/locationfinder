@@ -185,7 +185,7 @@
                     android:padding="15dp" >
 
                 <Spinner
-                    android:id="@+id/spnrFriendProfile"
+                    android:id="@+id/spnrFriendProfileGrp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/Blue" />
@@ -201,7 +201,7 @@
                     android:padding="15dp" >
             
                     <Button
-                        android:id="@+id/btnFriendProfileAdd"
+                        android:id="@+id/btnFriendProfileAddGrp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/FriendProfileAdd"

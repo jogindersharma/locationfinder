@@ -58,6 +58,8 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	CheckBox chbxUserProfileCode, chbxUserProfileName, chbxUserProfileEmail, chbxUserProfileMobNo ;
 	int searchOption;
 	
+	String fNameUpdatedVal;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -209,6 +209,7 @@ public class CustomUtil {
 						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Success", "Friend Request Sent Successfully.");
 					}
 				} catch (JSONException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
   	      } else {

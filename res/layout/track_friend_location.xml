@@ -21,7 +21,7 @@
             android:padding="5dp" >
 
             <ImageView
-                android:id="@+id/ivFriendProfilePic"
+                android:id="@+id/ivTrackFriendPic"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:src="@drawable/images" />
@@ -36,7 +36,7 @@
             android:gravity="center" >
 
             <TextView
-                android:id="@+id/tvFriendProfileName"
+                android:id="@+id/tvTrackFriendName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/FriendProfileName"
@@ -82,7 +82,7 @@
                         android:layout_weight=".5" >
 
                         <TextView
-                            android:id="@+id/tvFriendProfileLocLable"
+                            android:id="@+id/tvTrackFriendLocLable"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/FriendProfileLocLable"
@@ -98,7 +98,7 @@
                         android:gravity="right" >
 
                         <TextView
-                            android:id="@+id/tvFriendProfileDateTime"
+                            android:id="@+id/tvTrackFriendDateTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/FriendProfileDateTime"
@@ -122,7 +122,7 @@
                     android:layout_marginTop="10dp" >
 
                     <TextView
-                        android:id="@+id/tvFriendProfileAddress"
+                        android:id="@+id/tvTrackFriendAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/FriendProfileAddress" />
@@ -141,7 +141,7 @@
                 android:baselineAligned="false" >
                 
                 <Button
-                    android:id="@+id/btnFriendProfileAdd"
+                    android:id="@+id/btnTrackFriendMap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/FriendProfileViewLoc"
