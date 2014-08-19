@@ -5,6 +5,10 @@ import java.util.List;
 import com.anaadih.locationfinder.CustomUtil;
 import com.anaadih.locationfinder.R;
 import com.anaadih.locationfinder.dto.SearchDataItem;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +30,9 @@ public class SearchListAdapter extends BaseAdapter {
 	
 	private OnViewButtonClickedListener listener;
 	
+	private ImageLoader imageLoader ;
+	private DisplayImageOptions options ;
+	
 	public interface OnViewButtonClickedListener {
         public void OnAdd(String id);
     }
@@ -34,6 +41,17 @@ public class SearchListAdapter extends BaseAdapter {
 		super();
 		this.context = context;
 		this.rowItems = rowItems;
+		
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+		options = new DisplayImageOptions.Builder()
+		.displayer(new RoundedBitmapDisplayer((int) 27.5f))
+		.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
+	    .cacheInMemory()
+		.cacheOnDisc()
+		.build();
+
 	}
 
 	@Override
@@ -77,7 +95,8 @@ public class SearchListAdapter extends BaseAdapter {
 	    }
 	    	holder.friendId = rowItem.getUserId();
 	    	holder.tvSearchItemName.setText(rowItem.getName());
-	        holder.ivSearchItemPic.setImageResource(R.drawable.bmw);
+	        //holder.ivSearchItemPic.setImageResource(R.drawable.bmw);
+	        imageLoader.displayImage(rowItem.getImage(), holder.ivSearchItemPic, options);
 	        
 	        final ViewHolder fianlHolder = holder;
 	        

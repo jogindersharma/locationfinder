@@ -78,7 +78,9 @@ public class Home extends Activity {
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
 		// Recieve Request of friends 
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
-
+		// Create Group 
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+				
 		// Recycle the typed array
 		navMenuIcons.recycle();
 
@@ -194,7 +196,11 @@ public class Home extends Activity {
 		case 6:
 			fragment = new ReceiveRequest();
 			break;
-
+			
+		case 7:
+			fragment = new CreateGroupFragment();
+			break;
+			
 		default:
 			break;
 		}

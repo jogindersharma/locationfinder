@@ -12,14 +12,22 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.anaadih.locationfinder.MyNetworkClass;
 import com.anaadih.locationfinder.R;
 import com.anaadih.locationfinder.dto.ReceiveRequestDto;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class ReceiveRequestAdapter extends BaseAdapter {
 	
 	private Context context ;
 	private List<ReceiveRequestDto> rowItems ;
+	
+	private ImageLoader imageLoader ;
+	private DisplayImageOptions options ;
 	
 	public interface OnViewButtonClickedListener {
         public void OnAdd(String id);
@@ -29,6 +37,16 @@ public class ReceiveRequestAdapter extends BaseAdapter {
 		super();
 		this.context = context;
 		this.rowItems = rowItems;
+		
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+		options = new DisplayImageOptions.Builder()
+		.displayer(new RoundedBitmapDisplayer((int) 27.5f))
+		.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
+	    .cacheInMemory()
+		.cacheOnDisc()
+		.build();
 	}
 
 	@Override
@@ -72,7 +90,8 @@ public class ReceiveRequestAdapter extends BaseAdapter {
 	        
 	    	holder.friendId = rowItem.getUserId();
 	    	holder.tvreceiverequestName.setText(rowItem.getName());
-	        holder.ivreceiverequestPic.setImageResource(R.drawable.bmw);
+	        //holder.ivreceiverequestPic.setImageResource(R.drawable.bmw);
+	        imageLoader.displayImage(rowItem.getImage(), holder.ivreceiverequestPic, options);
 	        
 	        final ViewHolder fianlHolder = holder;
 	        

@@ -8,6 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.anaadih.locationfinder.networking.NetworkStatus;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -22,12 +26,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +51,10 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	JSONObject jsonResult;
 	Usergetdtailsinterface usergetDetailsObj;
 	UserCodeGenerateinterface userCodeGenerateObj;
+	ProfileUpdateInterface profileUpdateObj ;
 	RestAdapter restAdapter;
-	String TAG = "SelfProfileFragment";
+	String TAG = "UserProfileFragment";
 	Context context;
-	static int userPicUpdaterRequestCode = 99;
 	
 	Dialog profileUpdateDialog ;
 	LinearLayout llProfileUpdateFNameCancel, llprofileUpdateFNameSave ;
@@ -64,9 +64,12 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	EditText etProfileUpdate ;
 	TextView tvProfileUpdateHeader, tvProfileUpdateHint ;
 	CheckBox chbxUserProfileCode, chbxUserProfileName, chbxUserProfileEmail, chbxUserProfileMobNo ;
-	int searchOption;
+	int searchOptionId;
+	String fNameUpdatedValue, lNameUpdatedValue, emailUpdatedValue ;
+	double phoneUpdatedValue ;
 	
-	String fNameUpdatedVal;
+	private ImageLoader imageLoader ;
+	private DisplayImageOptions options ;
 	
 
 	@Override
@@ -77,6 +80,18 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		 initization(rootView);		 
 		 rootView.setClickable(true);
 		 getProfile();
+		 
+		 //Profile Image Loader
+		 	imageLoader = ImageLoader.getInstance();
+			imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+			options = new DisplayImageOptions.Builder()
+			.displayer(new RoundedBitmapDisplayer((int) 27.5f))
+			.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
+		    .cacheInMemory()
+			.cacheOnDisc()
+			.build();
+		 
 		return rootView;
 	}
 	
@@ -110,6 +125,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		ivUserProfileLNameEdit.setOnClickListener(this);
 		ivUserProfileMobEdit.setOnClickListener(this);
 		imUserProfile.setOnClickListener(this);
+		btnUserProfileSave.setOnClickListener(this);
 		
 	}
 	
@@ -153,6 +169,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		}
 		
 	}
+	
 	Callback<Response> userProfileCallback = new Callback<Response>() {
   	  
   	  @Override
@@ -198,6 +215,8 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 						tvEmailUser.setText(userInfoJsonObj.getString("user_email_id").toString());
 						tvPhoneUser.setText(userInfoJsonObj.getString("mobile_no").toString());
 						tvCodeUser.setText(userInfoJsonObj.getString("user_code").toString());
+						searchOptionId = userInfoJsonObj.getInt("search_option");
+						updateSearchOption ();
   						
 					}
 				} catch (JSONException e) {
@@ -252,6 +271,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 			((Activity) Home.context).finish();
 		}
 	}
+  	
   	Callback<Response> userCodeGenerateCallback = new Callback<Response>() {
     	  
     	  @Override
@@ -304,45 +324,42 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
     	    CustomUtil.getInstance(Home.context).hideDialogBox();
     	  }
     	};
+    	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-	switch (v.getId()) {
-		case R.id.btnUserProfileNewCode:
-			newCodeGen();	
-			break;
-		case R.id.ivUserProfilePic:
-			Toast.makeText(Home.context, "pic", Toast.LENGTH_SHORT).show();
-			
-			Intent changePic = new Intent(Home.context,ProfileImageUpdater.class);
-			startActivityForResult(changePic, userPicUpdaterRequestCode);
-			break;
-		case R.id.ivUserProfileEmailEdit:
-			//Toast.makeText(Home.context, "email", Toast.LENGTH_SHORT).show();
-			showEmailDialog(getActivity(), "Email Update", "Enter Valid Email-Id");
-			break;
-		case R.id.ivUserProfileFNameEdit:
-			//Toast.makeText(Home.context, "First name", Toast.LENGTH_SHORT).show();
-			
-			showFNameDialog(getActivity(), "First Name Update", "Enter First Name");
-			break;
-		case R.id.ivUserProfileLNameEdit:
-			//Toast.makeText(Home.context, "Last name", Toast.LENGTH_SHORT).show();
-			showLNameDialog(getActivity(), "Last Name Update", "Enter Last Name");
-			
-			break;
-		case R.id.ivUserProfileMobEdit:
-			//Toast.makeText(Home.context, "clcik", Toast.LENGTH_SHORT).show();
-			showMobNoDialog(getActivity(), "Mobile No Update", "Enter Valid Mobile No");
-			break;		
-		case R.id.btnUserProfileSave:
-			
-			updateUserProfileOnServer();
-			break;
+		switch (v.getId()) {
+			case R.id.btnUserProfileNewCode:
+				newCodeGen();	
+				break;
+			case R.id.ivUserProfilePic:
+				Intent changePic = new Intent(Home.context,ProfileImageUpdater.class);
+				startActivityForResult(changePic, 99);
+				break;
+			case R.id.ivUserProfileEmailEdit:
+				//Toast.makeText(Home.context, "email", Toast.LENGTH_SHORT).show();
+				showEmailDialog(getActivity(), "Email Update", "Enter Valid Email-Id");
+				break;
+			case R.id.ivUserProfileFNameEdit:
+				//Toast.makeText(Home.context, "First name", Toast.LENGTH_SHORT).show();
+				
+				showFNameDialog(getActivity(), "First Name Update", "Enter First Name");
+				break;
+			case R.id.ivUserProfileLNameEdit:
+				//Toast.makeText(Home.context, "Last name", Toast.LENGTH_SHORT).show();
+				showLNameDialog(getActivity(), "Last Name Update", "Enter Last Name");
+				
+				break;
+			case R.id.ivUserProfileMobEdit:
+				//Toast.makeText(Home.context, "clcik", Toast.LENGTH_SHORT).show();
+				showMobNoDialog(getActivity(), "Mobile No Update", "Enter Valid Mobile No");
+				break;		
+			case R.id.btnUserProfileSave:
+				
+				updateUserProfileOnServer();
+				break;
+		}
 	}
-	
-	}
-	
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -350,11 +367,46 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == 99 && resultCode == getActivity().RESULT_OK && data != null) {
 			 String profilePicUrl=data.getStringExtra("profilePicUrl");
+			 imageLoader.displayImage(profilePicUrl, imUserProfile, options);
 			 Log.e(TAG, "profilePicUrl =>"+profilePicUrl);
 		}
 	}
 	
-	
+	private void updateSearchOption () {
+		if (searchOptionId == 0) {
+			chbxUserProfileName.setChecked(true);
+			chbxUserProfileEmail.setChecked(true);
+			chbxUserProfileMobNo.setChecked(true);
+		} else if (searchOptionId == 1) {
+			chbxUserProfileName.setChecked(true);
+			chbxUserProfileEmail.setChecked(false);
+			chbxUserProfileMobNo.setChecked(false);
+		} else if (searchOptionId == 2) {
+			chbxUserProfileName.setChecked(false);
+			chbxUserProfileEmail.setChecked(true);
+			chbxUserProfileMobNo.setChecked(false);
+		} else if (searchOptionId == 3) {
+			chbxUserProfileName.setChecked(false);
+			chbxUserProfileEmail.setChecked(false);
+			chbxUserProfileMobNo.setChecked(true);
+		} else if (searchOptionId == 4) {
+			chbxUserProfileName.setChecked(false);
+			chbxUserProfileEmail.setChecked(false);
+			chbxUserProfileMobNo.setChecked(false);
+		} else if (searchOptionId == 5) {
+			chbxUserProfileName.setChecked(true);
+			chbxUserProfileEmail.setChecked(true);
+			chbxUserProfileMobNo.setChecked(false);
+		} else if (searchOptionId == 6) {
+			chbxUserProfileName.setChecked(false);
+			chbxUserProfileEmail.setChecked(true);
+			chbxUserProfileMobNo.setChecked(true);
+		} else if (searchOptionId == 7) {
+			chbxUserProfileName.setChecked(true);
+			chbxUserProfileEmail.setChecked(false);
+			chbxUserProfileMobNo.setChecked(true);
+		}
+	}
 	
 	public int getSearchOption() {
 		if (chbxUserProfileName.isChecked() && chbxUserProfileEmail.isChecked() 
@@ -550,6 +602,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		@POST(StaticStrings.UPDATE_USER_DETAILS)
 		void userProfileUpdate(
 				@Field("userId") Integer userId, 
+				@Field("optionId") Integer optionId,
 				@Field("userFName") String userFName, 
 				@Field("userLName") String userLName, 
 				@Field("userEmail") String userEmail, 
@@ -572,12 +625,17 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		 if (NetworkStatus.getInstance(Home.context).isInternetAvailable(Home.context)) {
 			 
 			 	Log.e(TAG, "Internet is available");
-	    		CustomUtil.getInstance(Home.context).showDialogBox("New Code", "Wait for new code...");
+	    		CustomUtil.getInstance(Home.context).showDialogBox("Prifile Update", "Profile Updating...");
 	    		
-	    		searchOption =  getSearchOption();
+	    		searchOptionId =  getSearchOption();
+	    		fNameUpdatedValue = tvFnameUser.getText().toString();
+	    		lNameUpdatedValue = tvLnameUser.getText().toString();
+	    		emailUpdatedValue = tvEmailUser.getText().toString();
+	    		phoneUpdatedValue = Double.parseDouble(tvPhoneUser.getText().toString());
 	    		
-	    		//profileUpdateObj = restAdapter.create(ProfileUpdateInterface.class);
-	    		//profileUpdateObj.userProfileUpdate(userId, fName, lName, email, mobNo, profileUpdateCallback);
+	    		profileUpdateObj = restAdapter.create(ProfileUpdateInterface.class);
+	    		profileUpdateObj.userProfileUpdate(userId, searchOptionId, fNameUpdatedValue, lNameUpdatedValue, 
+	    				emailUpdatedValue, phoneUpdatedValue, profileUpdateCallback);
 			 
 		 }else{
 				Log.e(TAG, "##########You are not online!!!!");
@@ -586,7 +644,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		}else{
 			// move to login screen
 			Log.e(TAG, "goToLoginPage");
-			Intent intent = new Intent(Home.context,Login.class);
+			Intent intent = new Intent(Home.context, Login.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			Home.context.startActivity(intent);
 			((Activity) Home.context).finish();
@@ -631,9 +689,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
   						Toast.makeText(Home.context, message, Toast.LENGTH_LONG).show();
   					} else if(success.equalsIgnoreCase("1")){
   						Toast.makeText(Home.context, jsonResult.getString("message").toString(), Toast.LENGTH_LONG).show();
-  						JSONObject userInfoJsonObj= jsonResult.getJSONObject("userInfo");
-						
-						tvCodeUser.setText(userInfoJsonObj.getString("user_code").toString());
+  					//	JSONObject userInfoJsonObj= jsonResult.getJSONObject("userInfo");
   					}
   				} catch (JSONException e) {
   					// TODO Auto-generated catch block

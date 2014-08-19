@@ -84,7 +84,6 @@ public class FriendFragment extends Fragment {
 	
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
-    	// TODO Auto-generated method stub
 	    super.onActivityCreated(savedInstanceState);		    
     }
 	
@@ -98,12 +97,17 @@ public class FriendFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
+				int userid=rowItemsList.get(position).getUserId();
+				Bundle bundle=new Bundle();
+				bundle.putInt("friendId", userid);
+				
 				FriendProfileFragment fr = new FriendProfileFragment();
 				FragmentTransaction ft = fragmentManager.beginTransaction();
+				fr.setArguments(bundle);
 				ft.replace(R.id.frame_container, fr);
 				ft.addToBackStack(FriendProfileFragment.class.getName());
 				ft.commit();
+				//Toast.makeText(getActivity(), ""+userid, 300).show();
 			}
 		});
     }

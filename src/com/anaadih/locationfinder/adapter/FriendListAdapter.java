@@ -5,6 +5,11 @@ import java.util.List;
 import com.anaadih.locationfinder.CustomUtil;
 import com.anaadih.locationfinder.R;
 import com.anaadih.locationfinder.dto.FriendListDataItem;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -25,6 +30,9 @@ public class FriendListAdapter extends BaseAdapter {
 	
 	private OnViewButtonClickedListener listener;
 	
+	private ImageLoader imageLoader ;
+	private DisplayImageOptions options ;
+	
 	public interface OnViewButtonClickedListener {
         public void OnAdd(String id);
     }
@@ -33,6 +41,16 @@ public class FriendListAdapter extends BaseAdapter {
 		super();
 		this.context = context;
 		this.rowItems = rowItems;
+		
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+		options = new DisplayImageOptions.Builder()
+		.displayer(new RoundedBitmapDisplayer((int) 27.5f))
+		.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
+	    .cacheInMemory()
+		.cacheOnDisc()
+		.build();
 	}
 
 	@Override
@@ -75,7 +93,8 @@ public class FriendListAdapter extends BaseAdapter {
 	    	holder.friendId = rowItem.getUserId();
 	    	holder.tvFriendListItemName.setText(rowItem.getName());
 	    	holder.tvFriendListCircleName.setText(rowItem.getGroup());
-	        holder.ivFriendListPic.setImageResource(R.drawable.bmw);
+	        //holder.ivFriendListPic.setImageResource(R.drawable.bmw);
+	        imageLoader.displayImage(rowItem.getImage(),  holder.ivFriendListPic, options);
 	        return convertView;
 	}
 	
