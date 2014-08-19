@@ -405,9 +405,10 @@ public class ProfileImageUpdater extends Activity {
   						Log.e("SeverResponse=>", "success variable is null");
   					} else if(success.equalsIgnoreCase("0")) {
   						String message = jsonResult.getString("message");
-  						Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+  						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
   					} else if(success.equalsIgnoreCase("1")) {
-  						goToUserProfile();
+  						String profilePicUrl = jsonResult.getString("profilePicUrl");
+  						goToUserProfile(profilePicUrl);
   					}
   				} catch (JSONException e) {
   					// TODO Auto-generated catch block
@@ -420,7 +421,11 @@ public class ProfileImageUpdater extends Activity {
     	  }
     };
     
-    public void goToUserProfile() {
+    public void goToUserProfile(String profilePicUrl) {
     	
+    	Intent returnIntent = new Intent();
+    	returnIntent.putExtra("profilePicUrl",profilePicUrl);
+    	setResult(RESULT_OK,returnIntent);
+    	finish();
     }
 }

@@ -183,7 +183,6 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
-
 	/* ++++++++++++++++ ============  GET  Friend Location  ==========*/
 	
 	 interface FriendProfileInterface {
@@ -195,7 +194,6 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 					Callback<Response> FriendProfileCallback);
 		}
 	 
-	
 		public void getFriendLocation(){
 		
 		SharedPreferences prefUserId =CustomUtil.getInstance(Home.context).getSharedPrefObj();
@@ -280,8 +278,4 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
   	    CustomUtil.getInstance(Home.context).hideDialogBox();
   	  }
   	};
-	
-	
-	
-
 }

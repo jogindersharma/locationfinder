@@ -3,9 +3,12 @@ package com.anaadih.locationfinder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.anaadih.locationfinder.networking.NetworkStatus;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -19,8 +22,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,8 +52,9 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	Usergetdtailsinterface usergetDetailsObj;
 	UserCodeGenerateinterface userCodeGenerateObj;
 	RestAdapter restAdapter;
-	String TAG = "UserProfileFragment";
+	String TAG = "SelfProfileFragment";
 	Context context;
+	static int userPicUpdaterRequestCode = 99;
 	
 	Dialog profileUpdateDialog ;
 	LinearLayout llProfileUpdateFNameCancel, llprofileUpdateFNameSave ;
@@ -305,8 +313,9 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.ivUserProfilePic:
 			Toast.makeText(Home.context, "pic", Toast.LENGTH_SHORT).show();
+			
 			Intent changePic = new Intent(Home.context,ProfileImageUpdater.class);
-			startActivity(changePic);
+			startActivityForResult(changePic, userPicUpdaterRequestCode);
 			break;
 		case R.id.ivUserProfileEmailEdit:
 			//Toast.makeText(Home.context, "email", Toast.LENGTH_SHORT).show();
@@ -333,6 +342,19 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	}
 	
 	}
+	
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == 99 && resultCode == getActivity().RESULT_OK && data != null) {
+			 String profilePicUrl=data.getStringExtra("profilePicUrl");
+			 Log.e(TAG, "profilePicUrl =>"+profilePicUrl);
+		}
+	}
+	
+	
 	
 	public int getSearchOption() {
 		if (chbxUserProfileName.isChecked() && chbxUserProfileEmail.isChecked() 

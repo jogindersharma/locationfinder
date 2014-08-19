@@ -8,7 +8,7 @@ public class StaticStrings {
 	public static final String USER_LOGIN_URL = "/joginder/locationfinder/webservices/login.php";
 	public static final String Find_FRIENDS_URL = "/joginder/locationfinder/webservices/findfriends.php";
 	public static final String SEND_FRIENDS_REQUEST_URL = "/joginder/locationfinder/webservices/sendfriendrequest.php";
-	public static final String GET_USER_DETAILS = "/joginder/locationfinder/webservices/userprofile.php";
+	public static final String GET_USER_DETAILS = "/joginder/locationfinder/webservices/get-user-profile.php";
 	public static final String UPDATE_USER_DETAILS = "/joginder/locationfinder/webservices/update_user_profile.php";
 	public static final String RECEIVE_REQUEST_URL="/joginder/locationfinder/webservices/receivedrequest.php";
 	public static final String REQUEST_RESPONSE_URL="/joginder/locationfinder/webservices/requestresponse.php";
@@ -16,7 +16,6 @@ public class StaticStrings {
 	public static final String UPDATE_USER_PIC = "/joginder/locationfinder/webservices/update-user-pic.php";
 	public static final String GET_LOCATION_REQUEST="/joginder/locationfinder/webservices/get-location-request.php";
 
-	
 	public static final String USER_ID = "userId";
 	public static final String DEVICE_GCM_ID = "deviceGcmId";
 	public static final String LOCATION_APP_VERSION = "appVersion";
