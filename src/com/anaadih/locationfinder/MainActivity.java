@@ -1,13 +1,14 @@
 package com.anaadih.locationfinder;
 
 import java.io.IOException;
+
 import com.anaadih.locationfinder.networking.NetworkStatus;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 	
@@ -125,7 +127,8 @@ public class MainActivity extends ActionBarActivity {
 	        		CustomUtil.getInstance(context).goToUserHome();
 	        	} else {
 	        		Log.e(TAG, "regid is blank or null");
-	        		NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Error", "Error: Please Re-Open this app.");
+	        		//NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Error", "Error: Please Re-Open this Application.");
+	        		Toast.makeText(context,"Error: Please Re-Open this Application", Toast.LENGTH_LONG).show();
 	        		finish();
 	        	}
 	        }

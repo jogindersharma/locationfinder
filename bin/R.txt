@@ -408,7 +408,7 @@ int id action_context_bar 0x7f050032
 int id action_menu_divider 0x7f05002b
 int id action_menu_presenter 0x7f05002c
 int id action_mode_close_button 0x7f050039
-int id action_settings 0x7f0500d1
+int id action_settings 0x7f0500d7
 int id activity_chooser_view_content 0x7f05003a
 int id always 0x7f050021
 int id aspectRatioX 0x7f0500a4
@@ -435,7 +435,7 @@ int id btnProfileImageUpdateRotate 0x7f050099
 int id btnProfileImageUpdateSetProfile 0x7f05009c
 int id btnSearchFriendFillter 0x7f0500c5
 int id btnSearchItemAdd 0x7f0500c9
-int id btnTrackFriendMap 0x7f0500d0
+int id btnTrackFriendMap 0x7f0500d6
 int id btnUserProfileNewCode 0x7f05006c
 int id btnUserProfileSave 0x7f050069
 int id btn_LoginRegister 0x7f05008f
@@ -476,6 +476,8 @@ int id end 0x7f050028
 int id etCreateGroupName 0x7f05006e
 int id etProfileUpdateInput 0x7f0500af
 int id etSearchInput 0x7f050079
+int id etSendSmsLabel 0x7f0500cb
+int id etSendSmsMessage 0x7f0500cc
 int id expand_activities_button 0x7f05003b
 int id expanded_menu 0x7f050041
 int id fixedAspectRatio 0x7f0500a1
@@ -499,7 +501,7 @@ int id ivProfileImageUpdate 0x7f050096
 int id ivProfileImageUpdatePreview 0x7f05009b
 int id ivSearchBtn 0x7f05007a
 int id ivSearchItemPic 0x7f0500c7
-int id ivTrackFriendPic 0x7f0500cb
+int id ivTrackFriendPic 0x7f0500d1
 int id ivUserProfileEmailEdit 0x7f050062
 int id ivUserProfileFNameEdit 0x7f05005e
 int id ivUserProfileLNameEdit 0x7f050060
@@ -512,6 +514,8 @@ int id list_slidermenu 0x7f050087
 int id llProfileUpdateCancel 0x7f0500b0
 int id llProfileUpdateSave 0x7f0500b2
 int id llSearchFriend 0x7f0500c2
+int id llSendSmsCancel 0x7f0500cd
+int id llSendSmsSend 0x7f0500cf
 int id lvFriendList 0x7f050076
 int id lvHomeAllList 0x7f050077
 int id lvSearchAllList 0x7f05007b
@@ -584,10 +588,12 @@ int id tvProfileUpdateHeader 0x7f0500ad
 int id tvProfileUpdateHint 0x7f0500ae
 int id tvProfileUpdateSave 0x7f0500b3
 int id tvSearchItemName 0x7f0500c8
-int id tvTrackFriendAddress 0x7f0500cf
-int id tvTrackFriendDateTime 0x7f0500ce
-int id tvTrackFriendLocLable 0x7f0500cd
-int id tvTrackFriendName 0x7f0500cc
+int id tvSendSmsCancel 0x7f0500ce
+int id tvSendSmsSend 0x7f0500d0
+int id tvTrackFriendAddress 0x7f0500d5
+int id tvTrackFriendDateTime 0x7f0500d4
+int id tvTrackFriendLocLable 0x7f0500d3
+int id tvTrackFriendName 0x7f0500d2
 int id tvUserProfileCode 0x7f05006b
 int id tvUserProfileCodeLable 0x7f05006a
 int id tvUserProfileEmail 0x7f050061
@@ -654,9 +660,10 @@ int layout receive_request_items 0x7f03002e
 int layout register 0x7f03002f
 int layout search_friends 0x7f030030
 int layout search_item 0x7f030031
-int layout support_simple_spinner_dropdown_item 0x7f030032
-int layout track_friend_location 0x7f030033
-int layout user_profile 0x7f030034
+int layout send_sms_dialog 0x7f030032
+int layout support_simple_spinner_dropdown_item 0x7f030033
+int layout track_friend_location 0x7f030034
+int layout user_profile 0x7f030035
 int menu main 0x7f0d0000
 int string FriendListCircleName 0x7f07004d
 int string FriendListItemName 0x7f070044

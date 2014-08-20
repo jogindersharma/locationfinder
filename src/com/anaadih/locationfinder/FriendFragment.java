@@ -19,11 +19,7 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
 import com.anaadih.locationfinder.adapter.FriendListAdapter;
-import com.anaadih.locationfinder.adapter.HomeListAdapter;
-import com.anaadih.locationfinder.adapter.SearchListAdapter;
 import com.anaadih.locationfinder.dto.FriendListDataItem;
-import com.anaadih.locationfinder.dto.HomeDataItem;
-import com.anaadih.locationfinder.dto.SearchDataItem;
 import com.anaadih.locationfinder.networking.NetworkStatus;
 
 import android.app.Fragment;

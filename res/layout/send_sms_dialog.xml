@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/pop_up_box"
+    android:layout_gravity="center"
+    android:padding="5dp"
+    android:weightSum="5"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight=".4"
+        android:gravity="center_vertical" >
+
+        <EditText
+            android:id="@+id/etSendSmsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:ems="10"
+            android:hint="Enter Your Message..."
+            android:background="@android:color/transparent" >
+
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="3.5"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:background="@drawable/edittext_normal" >
+
+        <EditText
+            android:id="@+id/etSendSmsMessage"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:background="@android:color/transparent"
+            android:gravity="top|left" >
+
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.1"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:id="@+id/llSendSmsCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tvSendSmsCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textSize="16sp"
+                android:textColor="@color/Blue" />
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/llSendSmsSend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tvSendSmsSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Blue"
+                android:textSize="16sp"
+                android:text="Send" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

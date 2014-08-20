@@ -10,7 +10,7 @@ import android.util.Log;
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-    	Log.e("Hidden Camera=>", "GcmBroadcastReceiver Called");
+    	Log.e("Location Finder =>", "Gcm Broadcast Receiver Called");
         // Explicitly specify that GcmIntentService will handle the intent.
         ComponentName comp = new ComponentName(context.getPackageName(),
         GcmIntentService.class.getName());

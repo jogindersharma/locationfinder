@@ -32,14 +32,13 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
             	Log.e("Received the GCM=>",extras.toString());
                 if(extras.getString("event") != null && extras.getString("event").equals("locRequest")) {
-                	Log.e("inSideGcmIntentService","start location service");
+                	Log.e(TAG,"We get a request for LatLong.");
                 	try {
                 			String requestId =  extras.getString("requestId");
-                			Log.e("inSideGcmIntentService","requestId"+requestId);
+                			Log.e("inSideGcmIntentService","requestId is => "+requestId);
                 			Intent serviceIntent = new Intent(this,GPSTracker.class);     
                         	serviceIntent.putExtra("getLocRequestId", requestId);
                         	startService(serviceIntent);
-                        	Log.e("inSideGcmIntentService","finally send"+requestId);
                 		} catch(Exception e) {
                 			Log.e("inSideGcmIntentService", e.getMessage());
                 			e.printStackTrace();
@@ -47,17 +46,34 @@ public class GcmIntentService extends IntentService {
                 }
                 
                 if(extras.getString("event") != null&&extras.getString("event").equals("locResponse")){
-                	Log.e(TAG,"backCamera Called");
-                	if(extras.getString("photoZoomLevel") != null) {
-                		String photoZoomLevel =  extras.getString("photoZoomLevel");
-                		String requestId =  extras.getString("requestId");
-                		/*Intent serviceIntent = new Intent(this,TakePhotoService.class);
-                    	serviceIntent.putExtra("photoZoomLevel", photoZoomLevel);
-                    	serviceIntent.putExtra("requestId", requestId);
-                    	serviceIntent.putExtra("cameraSide", "2");
-                    	startService(serviceIntent);*/
+                	Log.e(TAG,"We get the response for your Get Location Request.");
+                	if(extras.getString("latitude") != null) {
+                		
+                		String latitude =  extras.getString("latitude");
+                		String longitude =  extras.getString("longitude");
+                		int friendId =  Integer.parseInt(extras.getString("user_id"));
+                		String friendFname =  extras.getString("user_firstname");
+                		String friendLname =  extras.getString("user_lastname");
+                		String friendImageUrl =  extras.getString("image_name");
+                		String friendfullAddress =extras.getString("fullAddress");
+                		String responseTime =extras.getString("updated_at");
+                		
+                		/*Intent trakIntent = new Intent(this,GPSTracker.class);     
+                		
+                		trakIntent.putExtra("latitude", latitude);
+                		trakIntent.putExtra("longitude", longitude);
+                		trakIntent.putExtra("user_id", friendId);
+                		trakIntent.putExtra("user_firstname", friendFname);
+                		trakIntent.putExtra("user_lastname", friendLname);
+                		trakIntent.putExtra("image_name", friendImageUrl);
+                		trakIntent.putExtra("friendfullAddress", friendfullAddress);
+                		trakIntent.putExtra("responseTime", responseTime);
+                    	
+                		startService(trakIntent);
+                		*/
+                    	Log.e("inSideGcmIntentService Response","finally send"+friendId);
                 	} else {
-                		Log.e(TAG,"photoZoomLevel is null");
+                		Log.e(TAG,"Known Event");
                 	}
                 }
             }

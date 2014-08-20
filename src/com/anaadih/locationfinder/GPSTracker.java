@@ -1,7 +1,10 @@
 package com.anaadih.locationfinder;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import org.json.JSONException;
 import org.json.JSONObject;
 import com.anaadih.locationfinder.networking.NetworkStatus;
-
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -20,8 +23,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class GPSTracker extends Service implements LocationListener {
-
-	private final Context mContext;
 
 	// flag for GPS status
 	boolean isGPSEnabled = false;
@@ -57,7 +58,7 @@ public class GPSTracker extends Service implements LocationListener {
 	protected LocationManager locationManager;
 
 	public GPSTracker() {
-		mContext=Home.context;
+		context=Home.context;
 	}
 	
 	@Override
@@ -87,6 +88,7 @@ public class GPSTracker extends Service implements LocationListener {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
+		context=Home.context;
 		Log.e("inGPSTACKERService","onstatcommand");
 		if(intent.getExtras().getString("getLocRequestId") !="") {
 			getLocRequestId = intent.getExtras().getString("getLocRequestId");
@@ -98,7 +100,7 @@ public class GPSTracker extends Service implements LocationListener {
 
 	public void getLocation() {
 		try {
-			locationManager = (LocationManager) mContext
+			locationManager = (LocationManager) context
 					.getSystemService(LOCATION_SERVICE);
 
 			// getting GPS status
@@ -121,7 +123,7 @@ public class GPSTracker extends Service implements LocationListener {
 							LocationManager.NETWORK_PROVIDER,
 							MIN_TIME_BW_UPDATES,
 							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-					Log.d("Network", "Network");
+					Log.d("Network", "Network"+locationManager);
 					if (locationManager != null) {
 						location = locationManager
 								.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -143,7 +145,7 @@ public class GPSTracker extends Service implements LocationListener {
 								LocationManager.GPS_PROVIDER,
 								MIN_TIME_BW_UPDATES,
 								MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-						Log.d("GPS Enabled", "GPS Enabled");
+						Log.d("GPS Enabled", "GPS Enabled"+locationManager);
 						if (locationManager != null) {
 							location = locationManager
 									.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -157,9 +159,11 @@ public class GPSTracker extends Service implements LocationListener {
 					}
 				}
 			}
-			
+			if(latitude!=0.0){
 			sendLocation();
-
+			}else{
+				Log.e(TAG, "lat long is empty");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -248,6 +252,15 @@ public class GPSTracker extends Service implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
+		if (location != null)
+	    {
+	        Log.i("SuperMap", "Location changed : Lat: " + location.getLatitude() + " Lng: " + location.getLongitude());
+	        latitude = location.getLatitude();
+	        longitude = location.getLongitude();
+	        Log.i("latitude,longitude", ""+latitude+","+longitude);
+
+
+	    } 
 	}
 
 	@Override
@@ -268,13 +281,13 @@ public class GPSTracker extends Service implements LocationListener {
 	
 	interface LocationInterface {
 		@FormUrlEncoded
-		@POST(StaticStrings.Find_FRIENDS_URL)
+		@POST(StaticStrings.GET_LOCATION_RESPONSE)
 		void getLocation(
 				@Field("latitude") Double latitude,
 				@Field("longitude") Double longitude,
 				@Field("getLocRequestId") int getLocRequestId,
 				@Field("getLocResponseStatus") int getLocStatus,
-				@Field("getLocResponseStatus") String message,
+				@Field("getLocResponseMessage") String message,
 				Callback<Response> LocationCallback);
 	}
 	
@@ -288,7 +301,7 @@ public class GPSTracker extends Service implements LocationListener {
 			 
 			 	Log.e(TAG, "Internet is available");
 	    		//CustomUtil.getInstance(Home.context).hideDialogBox();
-			 	Log.e(TAG, "latitude and longitude"+latitude+"----"+longitude);
+			 	Log.e(TAG, "send back latitude and longitude"+latitude+"----"+longitude);
 	    		locationobj = restAdapter.create(LocationInterface.class);
 	    		locationobj.getLocation(latitude,longitude,Integer.parseInt(getLocRequestId),getLocStatus,message,LocationCallback);
 			 
@@ -302,54 +315,53 @@ public class GPSTracker extends Service implements LocationListener {
   	  
   	  @Override
   	  public void failure(RetrofitError result) {
-  		  Log.e("Retrofit Error ","GPSTracker");
-  		//CustomUtil.getInstance(Home.context).hideDialogBox();
+  		  Log.e("Retrofit Error ","Error in sending the LatLong to Server. We are trying again ...");
+  		  sendLocation();
   	  }
   	  
-  	  @Override
-  	  public void success(Response result, Response response) {
-  		Log.e("Retrofit suceess ","GPSTracker send location");
-  		  /*BufferedReader reader = null;
-  	      StringBuilder sb = new StringBuilder();
-  	      try {
-  	          reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
-  	          String line;
-  	          try {
-  	              while ((line = reader.readLine()) != null) {
-  	                  sb.append(line);
-  	              }
-  	          } catch (IOException e) {
-  	              e.printStackTrace();
-  	          }
-  	      } catch (IOException e) {
-  	          e.printStackTrace();
-  	      }
-  	      responseString = sb.toString();
-  	      if(CustomUtil.getInstance(Home.context).isJSONValid(responseString)) {
-  	    	Log.e("SeverResponse=>", responseString);
+  	@Override
+	  public void success(Response result, Response response) {
+		  BufferedReader reader = null;
+	      StringBuilder sb = new StringBuilder();
+	      try {
+	          reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+	          String line;
+	          try {
+	              while ((line = reader.readLine()) != null) {
+	                  sb.append(line);
+	              }
+	          } catch (IOException e) {
+	              e.printStackTrace();
+	          }
+	      } catch (IOException e) {
+	          e.printStackTrace();
+	      }
+	      responseString = sb.toString();
+	      if(CustomUtil.getInstance(context).isJSONValid(responseString)) {
+	    	Log.e("SeverResponse=>", responseString);
 	  	    	try {
 					jsonResult = new JSONObject(responseString);
 					String success = jsonResult.getString("success");
 					if(success == null) {
 						Log.e("SeverResponse=>", "success variable is null");
+						//sendLocation();
 					} else if(success.equalsIgnoreCase("0")) {
 						String message = jsonResult.getString("message");
-						Toast.makeText(Home.context, message, Toast.LENGTH_LONG).show();
+						//sendLocation();
 					} else if(success.equalsIgnoreCase("1")){
-						//JSONObject userInfoJsonObj= jsonResult.getJSONObject("userInfo");
-						
-  						
+						String message = jsonResult.getString("message");
+						Log.e(TAG,"Success ==> "+message);
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-  	      } else {
-  	    	Log.e("SeverResponse=>", "is not a JSON =>"+responseString);
-  	      } 
-  	    CustomUtil.getInstance(Home.context).hideDialogBox();*/
-  	  }
-  	  	};
+	      } else {
+	    	Log.e(TAG, "SeverResponse is not a JSON =>"+responseString+" We are trying again ...");
+	    	//sendLocation();
+	      }
+	    CustomUtil.getInstance(context).hideDialogBox();
+	  }
+  	};
 	
 	
 }
