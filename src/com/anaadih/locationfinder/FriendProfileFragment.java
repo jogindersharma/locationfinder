@@ -3,15 +3,17 @@ package com.anaadih.locationfinder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.anaadih.locationfinder.dto.HomeDataItem;
 import com.anaadih.locationfinder.networking.NetworkStatus;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -21,9 +23,11 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -56,15 +60,16 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 	String TAG = "FriendProfileFragment";
 	String typebtn="";
 	String message="";
-	private List<HomeDataItem> rowItemsList ;
-	private String[] name, group, address, datetime ;
+	
 	ArrayAdapter<String> reg_adp;
 	List<String> regions;
 	int grp_id=0;
-
-	int friendId=0;
 	
-	private String[] userGroups ;
+	int friendId = 0;
+	String friendName, friendImgUrl ;
+	
+	private String[] userGroups;
+	private int[] userGroupId;
 	
 	Context context ;
 	GroupListInterface getGroupsObj ;
@@ -80,7 +85,9 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 	LinearLayout llSendSmsCancel, llSendSmsSend ;
 	EditText etSendSmsMessage ;
 	String smsContent ;
-
+	
+	private ImageLoader imageLoader ;
+	private DisplayImageOptions options ;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -90,25 +97,26 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 		context = container.getContext() ;
 		inilization(rootView);
 		
-		getGroupList();
+		//Profile Image Loader
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+		options = new DisplayImageOptions.Builder()
+		.displayer(new RoundedBitmapDisplayer((int) 27.5f))
+		.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
 		
 		friendId = getArguments().getInt("friendId");
+		friendName = getArguments().getString("friendName");
+		friendImgUrl = getArguments().getString("friendImgUrl");
 		Log.e("Frient id", ""+friendId);
 		
-		 rowItemsList = new ArrayList<HomeDataItem>() ;
-			name = new String [] { "Amit Groch", "Joginder Sharma", "Pramod Kumar Varma", "Jitendra Kumar Yadav", "Pradeep Singh Gusian",
-					"Anil Kumar Vishwakarma", "Pankaj Kumar Sharma", "Rajesh Kumar", "Ashok Kumar", "Pradeep Pandey" } ;
-			group = new String [] {"Faimily", "Friend", "Collegue", "faimily", "Friend", "Office", "Relative", "Nighbour", "Friend", "Faimily" } ;
-			address = new String [] { "Indira Puram", "Anaadih Softech", "C-279 New Ashok Nagar", "nKaps Intellect", "Subharti University",
-					"Migital Magic", "Clavax India", "Innovative AIIMS", "Fransccicon India", "Tata Consultancy Services (TCS)" } ;
-			datetime = new String [] {"11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)",
-					"11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)"} ;
-
-	        for (int i = 0 ; i < name .length ; i ++)
-			{
-	        	HomeDataItem items = new  HomeDataItem(name[i], group[i], address[i], datetime[i], 1) ;
-				rowItemsList.add(items) ;
-			}	
+		tvFriendProfileName.setText(friendName);
+		imageLoader.displayImage(friendImgUrl, ivFriendProfilePic, options);
+		
+		getGroupList();
 
 		return rootView;
 	}
@@ -132,8 +140,7 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 	    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {			
 	        // Write your logic what you want to do on selecting the item
 		    if (arg2!=0) {
-		    	message=rowItemsList.get(arg2-1).getName();
-		        Toast.makeText(getActivity(), message, 200).show();		        
+		    	grp_id =userGroupId[arg2];	        
 		    } else {
 		    	message=null;	    	
 		    }
@@ -151,10 +158,6 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 				.findViewById(R.id.ivFriendProfilePic);
 		tvFriendProfileName = (TextView) rootView
 				.findViewById(R.id.tvFriendProfileName);
-		tvFriendProfileDateTime = (TextView) rootView
-				.findViewById(R.id.tvFriendProfileDateTime);
-		tvFriendProfileAddress = (TextView) rootView
-				.findViewById(R.id.tvFriendProfileAddress);
 		btnFriendProfileGetLoc = (Button) rootView
 				.findViewById(R.id.btnFriendProfileGetLoc);
 		btnFriendProfileSendSMS = (Button) rootView
@@ -184,13 +187,35 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 			sendSMSDialog(getActivity());
 			break;
 		case R.id.btnFriendProfileBlock:
-			Toast.makeText(Home.context, "Block", 200).show();
+			AlertDialog .Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+			alertDialogBuilder.setTitle("Block Friend");
+			alertDialogBuilder.setMessage("Are you sure you want to block this friend ???")
+			.setCancelable(true)
+			.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					blockFriend();
+				}
+			})
+			.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.cancel();
+				}
+			});
+			// create alert dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
 			break;
 		case R.id.btnFriendProfileAddGrp:
-			if(message!=null){
-			Toast.makeText(Home.context, message, 200).show();
+			if (grp_id > 0 ) {
+				addFriendToGroup();
 			}else{
-				Toast.makeText(Home.context, "select group name", 200).show();
+				Toast.makeText(Home.context, "select group name", Toast.LENGTH_SHORT).show();
 			}
 			break;
 
@@ -208,7 +233,7 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 					Callback<Response> FriendProfileCallback);
 		}
 	 
-		public void getFriendLocation(){
+		public void getFriendLocation() {
 		
 		SharedPreferences prefUserId =CustomUtil.getInstance(Home.context).getSharedPrefObj();
 		int userId= prefUserId.getInt(StaticStrings.USER_ID, 0);
@@ -247,6 +272,7 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
   	  public void failure(RetrofitError result) {
   		  Log.e("Retrofit Error ", "FriendProfileFragment");
   		CustomUtil.getInstance(Home.context).hideDialogBox();
+  		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
   	  }
   	  
   	  @Override
@@ -277,7 +303,7 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 					} else if(success.equalsIgnoreCase("0")) {
 						String message = jsonResult.getString("message");
 						Toast.makeText(Home.context, message, Toast.LENGTH_LONG).show();
-					} else if(success.equalsIgnoreCase("1")){
+					} else if(success.equalsIgnoreCase("1")) {
 						String message= jsonResult.getString("message");
 						Log.e("message", message);
 						Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
@@ -294,7 +320,7 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
   	  }
   	};
   	
-    //<<<<<<<<<<============ Getting User Group List ==========>>>>>>>>>>>
+//<<<<<<<<<<============ Getting User Group List ==========>>>>>>>>>>>
   	
   	interface GroupListInterface {
   		@FormUrlEncoded
@@ -329,7 +355,8 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 		@Override
 		public void failure(RetrofitError result) {
 			Log.e("Retrofit Error ","Error in Groups Getting...");
-		  	CustomUtil.getInstance(context).hideDialogBox();  	
+		  	CustomUtil.getInstance(context).hideDialogBox(); 
+		  	CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
 		}
 		  	  
 		@Override
@@ -363,13 +390,18 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 						Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
 					} else if (success.equalsIgnoreCase("1")) {
-						String message = jsonResult.getString("message");
+						//String message = jsonResult.getString("message");
 						JSONArray groupList = jsonResult.getJSONArray("groupList");
 						int groupLength = groupList.length() ;
-						userGroups = new String[groupLength] ;
+						userGroups = new String[groupLength + 1] ;
+						userGroupId = new int[groupLength + 1] ;
 						
-						for (int i = 0; i < groupLength; i++) {
-							userGroups[i] = groupList.getJSONObject(i).getString("group_name"); 
+						userGroups[0] = "--Select Group--"; 
+						userGroupId [0] = 0; 
+						
+						for (int i = 0; i < groupLength; i++) {							
+							userGroups[i+1] = groupList.getJSONObject(i).getString("group_name"); 
+							userGroupId [i+1] = Integer.parseInt(groupList.getJSONObject(i).getString("group_id")); 
 							Log.i("Group Name", userGroups[i]);
 						}
 						addDataToSpinner();
@@ -421,7 +453,8 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 		@Override
 		public void failure(RetrofitError result) {
 			Log.e("Retrofit Error ","Error in SMS Sending...");
-		  	CustomUtil.getInstance(context).hideDialogBox();  	
+		  	CustomUtil.getInstance(context).hideDialogBox(); 
+		  	CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
 		}
 		  	  
 		@Override
@@ -456,7 +489,7 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
 					} else if (success.equalsIgnoreCase("1")) {
 						String message = jsonResult.getString("message");
-						//JSONArray friendList = jsonResult.getJSONArray("friendList");
+						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Success", message);
 					}					
 			  	} catch (JSONException e) {
 			  		e.printStackTrace();			  		
@@ -468,99 +501,18 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 		}	
 	};
 	
-    // <<<<<<<<<<============ Block Friend ==========>>>>>>>>>>>
-  
-  	interface BlockFriendInterface {
-  		@FormUrlEncoded
-		@POST(StaticStrings.GET_FRIEND_LIST)
-		void block(
-				@Field("userId") int userId,
-				Callback<Response> blockFriendCallback); 		
-  	}
-		
-	public void blockFriend() {
-		if (NetworkStatus.getInstance(context).isInternetAvailable(context)) {
-			Log.e(TAG, "Internet is available");
-	    		
-	    	restAdapter = new RestAdapter.Builder()
-	        .setEndpoint(StaticStrings.SITE_URL)
-	        .setLogLevel(RestAdapter.LogLevel.FULL)
-	        .build();
-	    		
-	        CustomUtil.getInstance(context).showDialogBox("Server Connection", "Friend Blocking...");
-	    	int userId = CustomUtil.getInstance(context).getUserId();
-	    		
-	    	blockFriendObj = restAdapter.create(BlockFriendInterface.class);
-	    	blockFriendObj.block(userId, blockFriendCallback);
-	    	
-		} else {
-			Log.e(TAG, "##########You are not online!!!!");
-	    	NetworkStatus.getInstance(context).showDefaultNoInternetDialog(context);	    	
-		}	
-	}
-		
-	Callback<Response> blockFriendCallback = new Callback<Response>() {
-		@Override
-		public void failure(RetrofitError result) {
-			Log.e("Retrofit Error ","Error in Friend Blocking...");
-		  	CustomUtil.getInstance(context).hideDialogBox();  	
-		}
-		  	  
-		@Override
-		public void success(Response result, Response response) {
-			BufferedReader reader = null;
-		  	StringBuilder sb = new StringBuilder();
-		  	try {
-		  		reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
-		  	    String line;
-		  	    try {
-		  	    	while ((line = reader.readLine()) != null) {
-		  	    		sb.append(line);		  	    		
-		  	    	}		  	    	
-		  	    } catch (IOException e) {
-		  	    	e.printStackTrace();		  	    	
-		  	    }	  	    
-		  	} catch (IOException e) {
-		  		e.printStackTrace();	  		
-		  	}
-		  	
-		  	responseString = sb.toString();
-		  	if(CustomUtil.getInstance(context).isJSONValid(responseString)) {
-		  		Log.e("SeverResponse=>", responseString);
-			  	try {
-			  		jsonResult = new JSONObject(responseString);
-					String success = jsonResult.getString("success");
-					if(success == null) {
-						Log.e("SeverResponse=>", "success variable is null");
-					} else if (success.equalsIgnoreCase("0")) {
-						String message = jsonResult.getString("message");
-						Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-						NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
-					} else if (success.equalsIgnoreCase("1")) {
-						String message = jsonResult.getString("message");
-						//JSONArray friendList = jsonResult.getJSONArray("friendList");
-					}					
-			  	} catch (JSONException e) {
-			  		e.printStackTrace();			  		
-			  	}			  	
-		  	} else {
-		  		Log.e("SeverResponse=>", "is not a JSON =>"+responseString);		  		
-		  	}
-		  	CustomUtil.getInstance(context).hideDialogBox();		  	
-		}	
-	};
-	
-	//<<<<<<<<<<<=========== Add friend to group ==========>>>>>>>>>>
-
-	  	interface AddFriendToGroupInterface {
+	// <<<<<<<<<<============ Block Friend ==========>>>>>>>>>>>
+	  
+	  	interface BlockFriendInterface {
 	  		@FormUrlEncoded
-			@POST(StaticStrings.GET_FRIEND_LIST)
-			void addGroup(
+			@POST(StaticStrings.BLOCK_FRIEND_URL)
+			void block(
 					@Field("userId") int userId,
-					Callback<Response> addFriendToGroupCallback); 		
+					@Field("friendId") int friendId,
+					Callback<Response> blockFriendCallback); 		
 	  	}
 			
-		public void addFriendToGroup() {
+		public void blockFriend() {
 			if (NetworkStatus.getInstance(context).isInternetAvailable(context)) {
 				Log.e(TAG, "Internet is available");
 		    		
@@ -569,11 +521,11 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 		        .setLogLevel(RestAdapter.LogLevel.FULL)
 		        .build();
 		    		
-		        CustomUtil.getInstance(context).showDialogBox("Server Connection", "Adding in group...");
+		        CustomUtil.getInstance(context).showDialogBox("Server Connection", "Friend Blocking...");
 		    	int userId = CustomUtil.getInstance(context).getUserId();
 		    		
-		    	addFriendToGroupObj = restAdapter.create(AddFriendToGroupInterface.class);
-		    	addFriendToGroupObj.addGroup(userId, addFriendToGroupCallback);
+		    	blockFriendObj = restAdapter.create(BlockFriendInterface.class);
+		    	blockFriendObj.block(userId, friendId, blockFriendCallback);
 		    	
 			} else {
 				Log.e(TAG, "##########You are not online!!!!");
@@ -581,11 +533,12 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 			}	
 		}
 			
-		Callback<Response> addFriendToGroupCallback = new Callback<Response>() {
+		Callback<Response> blockFriendCallback = new Callback<Response>() {
 			@Override
 			public void failure(RetrofitError result) {
 				Log.e("Retrofit Error ","Error in Friend Blocking...");
-			  	CustomUtil.getInstance(context).hideDialogBox();  	
+			  	CustomUtil.getInstance(context).hideDialogBox();
+			  	CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
 			}
 			  	  
 			@Override
@@ -617,10 +570,10 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 						} else if (success.equalsIgnoreCase("0")) {
 							String message = jsonResult.getString("message");
 							Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
+							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Error", message);
 						} else if (success.equalsIgnoreCase("1")) {
 							String message = jsonResult.getString("message");
-							//JSONArray friendList = jsonResult.getJSONArray("friendList");
+							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Response", message);
 						}					
 				  	} catch (JSONException e) {
 				  		e.printStackTrace();			  		
@@ -631,6 +584,91 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 			  	CustomUtil.getInstance(context).hideDialogBox();		  	
 			}	
 		};
+		
+		//<<<<<<<<<<<=========== Add friend to group ==========>>>>>>>>>>
+
+		  	interface AddFriendToGroupInterface {
+		  		@FormUrlEncoded
+				@POST(StaticStrings.CHANGE_GROUP_URL)
+				void addGroup(
+						@Field("userId") int userId,
+						@Field("friendId") int friendId,
+						@Field("groupId") int groupId,
+						Callback<Response> addFriendToGroupCallback); 		
+		  	}
+				
+			public void addFriendToGroup() {
+				if (NetworkStatus.getInstance(context).isInternetAvailable(context)) {
+					Log.e(TAG, "Internet is available");
+			    		
+			    	restAdapter = new RestAdapter.Builder()
+			        .setEndpoint(StaticStrings.SITE_URL)
+			        .setLogLevel(RestAdapter.LogLevel.FULL)
+			        .build();
+			    		
+			        CustomUtil.getInstance(context).showDialogBox("Server Connection", "Adding in group...");
+			    	int userId = CustomUtil.getInstance(context).getUserId();
+			    		
+			    	addFriendToGroupObj = restAdapter.create(AddFriendToGroupInterface.class);
+			    	addFriendToGroupObj.addGroup(userId, friendId, grp_id, addFriendToGroupCallback);
+			    	
+				} else {
+					Log.e(TAG, "##########You are not online!!!!");
+			    	NetworkStatus.getInstance(context).showDefaultNoInternetDialog(context);	    	
+				}	
+			}
+				
+			Callback<Response> addFriendToGroupCallback = new Callback<Response>() {
+				@Override
+				public void failure(RetrofitError result) {
+					Log.e("Retrofit Error ","Error in Friend Blocking...");
+				  	CustomUtil.getInstance(context).hideDialogBox();  
+				  	CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
+				}
+				  	  
+				@Override
+				public void success(Response result, Response response) {
+					BufferedReader reader = null;
+				  	StringBuilder sb = new StringBuilder();
+				  	try {
+				  		reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+				  	    String line;
+				  	    try {
+				  	    	while ((line = reader.readLine()) != null) {
+				  	    		sb.append(line);		  	    		
+				  	    	}		  	    	
+				  	    } catch (IOException e) {
+				  	    	e.printStackTrace();		  	    	
+				  	    }	  	    
+				  	} catch (IOException e) {
+				  		e.printStackTrace();	  		
+				  	}
+				  	
+				  	responseString = sb.toString();
+				  	if(CustomUtil.getInstance(context).isJSONValid(responseString)) {
+				  		Log.e("SeverResponse=>", responseString);
+					  	try {
+					  		jsonResult = new JSONObject(responseString);
+							String success = jsonResult.getString("success");
+							if(success == null) {
+								Log.e("SeverResponse=>", "success variable is null");
+							} else if (success.equalsIgnoreCase("0")) {
+								String message = jsonResult.getString("message");
+								Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+								NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Error", message);
+							} else if (success.equalsIgnoreCase("1")) {
+								String message = jsonResult.getString("message");
+								NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Response", message);
+							}					
+					  	} catch (JSONException e) {
+					  		e.printStackTrace();			  		
+					  	}			  	
+				  	} else {
+				  		Log.e("SeverResponse=>", "is not a JSON =>"+responseString);		  		
+				  	}
+				  	CustomUtil.getInstance(context).hideDialogBox();		  	
+				}	
+			};
 		
 		protected void sendSMSDialog(Context context) {
 
@@ -671,4 +709,6 @@ public class FriendProfileFragment extends Fragment implements OnClickListener {
 
 	 		smsDialog.show();
 	 	}
+		
+		
 }

@@ -47,7 +47,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	ImageView imUserProfile,ivUserProfileFNameEdit,ivUserProfileLNameEdit,ivUserProfileEmailEdit,ivUserProfileMobEdit;
 	TextView tvFnameUser,tvLnameUser,tvEmailUser,tvPhoneUser,tvCodeUser;
 	Button btnNewCode,btnUserProfileSave;
-	String responseString;
+	String responseString, profileImageUrl;
 	JSONObject jsonResult;
 	Usergetdtailsinterface usergetDetailsObj;
 	UserCodeGenerateinterface userCodeGenerateObj;
@@ -70,27 +70,29 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 	
 	private ImageLoader imageLoader ;
 	private DisplayImageOptions options ;
-	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		 View rootView = inflater.inflate(R.layout.activity_user_profile, container, false);
-		 context = container.getContext();
-		 initization(rootView);		 
-		 rootView.setClickable(true);
-		 getProfile();
-		 
-		 //Profile Image Loader
-		 	imageLoader = ImageLoader.getInstance();
-			imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+		View rootView = inflater.inflate(R.layout.activity_user_profile, container, false);
+		context = container.getContext();
+		initization(rootView);		 
+		rootView.setClickable(true);
+		
+		//Profile Image Loader
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 
-			options = new DisplayImageOptions.Builder()
-			.displayer(new RoundedBitmapDisplayer((int) 27.5f))
-			.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
-		    .cacheInMemory()
-			.cacheOnDisc()
-			.build();
+		options = new DisplayImageOptions.Builder()
+		.displayer(new RoundedBitmapDisplayer((int) 27.5f))
+		.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
+		.cacheInMemory()
+		.cacheOnDisc()
+		.build();
+		
+		getProfile();
+
+	//	imageLoader.displayImage(profileImageUrl, imUserProfile, options);
 		 
 		return rootView;
 	}
@@ -113,20 +115,14 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 		chbxUserProfileName = (CheckBox) rootview.findViewById(R.id.chbxUserProfileName);
 		chbxUserProfileEmail = (CheckBox) rootview.findViewById(R.id.chbxUserProfileEmail);
 		chbxUserProfileMobNo = (CheckBox) rootview.findViewById(R.id.chbxUserProfileMobNo);
-		/*btnNewCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            	newCodeGen();
-            }
-        });*/
+
 		btnNewCode.setOnClickListener(this);
 		ivUserProfileEmailEdit.setOnClickListener(this);
 		ivUserProfileFNameEdit.setOnClickListener(this);
 		ivUserProfileLNameEdit.setOnClickListener(this);
 		ivUserProfileMobEdit.setOnClickListener(this);
 		imUserProfile.setOnClickListener(this);
-		btnUserProfileSave.setOnClickListener(this);
-		
+		btnUserProfileSave.setOnClickListener(this);		
 	}
 	
 	interface Usergetdtailsinterface{
@@ -145,69 +141,66 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
         .setEndpoint(StaticStrings.SITE_URL)
         .setLogLevel(RestAdapter.LogLevel.FULL)
         .build();
-		if(userId!=0){
 		
-		 if (NetworkStatus.getInstance(Home.context).isInternetAvailable(Home.context)) {
-			 
-			 	Log.e(TAG, "Internet is available");
-	    		CustomUtil.getInstance(Home.context).showDialogBox("User Profile", "Loading your profile...");
-	    		
-	    		usergetDetailsObj = restAdapter.create(Usergetdtailsinterface.class);
-	    		usergetDetailsObj.userSelfProfile(userId, userProfileCallback);
-			 
-		 }else{
+		if (userId!=0) {
+			if (NetworkStatus.getInstance(Home.context).isInternetAvailable(Home.context)) {
+				Log.e(TAG, "Internet is available");
+	    	    CustomUtil.getInstance(Home.context).showDialogBox("User Profile", "Loading your profile...");
+	    	    usergetDetailsObj = restAdapter.create(Usergetdtailsinterface.class);
+	    	    usergetDetailsObj.userSelfProfile(userId, userProfileCallback);    	    
+			} else {
 				Log.e(TAG, "##########You are not online!!!!");
-	    		NetworkStatus.getInstance(Home.context).showDefaultNoInternetDialog(Home.context);
-		 }
-		}else{
+	    		NetworkStatus.getInstance(Home.context).showDefaultNoInternetDialog(Home.context);	    		
+			}
+		} else {
 			// move to login screen
 			Log.e(TAG, "goToLoginPage");
 			Intent intent = new Intent(Home.context,Login.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			Home.context.startActivity(intent);
 			((Activity) Home.context).finish();
-		}
-		
+		}	
 	}
 	
 	Callback<Response> userProfileCallback = new Callback<Response>() {
+		
+		@Override
+  	    public void failure(RetrofitError result) {
+			Log.e("Retrofit Error ","Error in fetching Your Profile Data. Try Again ...");
+  		    CustomUtil.getInstance(Home.context).hideDialogBox();
+  		  CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
+		}
   	  
-  	  @Override
-  	  public void failure(RetrofitError result) {
-  		  Log.e("Retrofit Error ","Error in fetching Your Profile Data. Try Again ...");
-  		  NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", "Error in fetching Your Profile Data. Try Again ...");
-  		CustomUtil.getInstance(Home.context).hideDialogBox();
-  	  }
-  	  
-  	  @Override
-  	  public void success(Response result, Response response) {
-  		  BufferedReader reader = null;
-  	      StringBuilder sb = new StringBuilder();
-  	      try {
-  	          reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
-  	          String line;
-  	          try {
-  	              while ((line = reader.readLine()) != null) {
-  	                  sb.append(line);
-  	              }
-  	          } catch (IOException e) {
-  	              e.printStackTrace();
-  	          }
-  	      } catch (IOException e) {
-  	          e.printStackTrace();
-  	      }
-  	      responseString = sb.toString();
-  	      if(CustomUtil.getInstance(Home.context).isJSONValid(responseString)) {
-  	    	Log.e("SeverResponse=>", responseString);
+  	    @Override
+  	    public void success(Response result, Response response) {
+  	    	BufferedReader reader = null;
+  	        StringBuilder sb = new StringBuilder();
+  	        try {
+  	        	reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+  	            String line;
+  	            try {
+  	            	while ((line = reader.readLine()) != null) {
+  	            		sb.append(line); 	            		
+  	            	} 	            	
+  	            } catch (IOException e) {
+  	            	e.printStackTrace(); 	            	
+  	            }	            
+  	        } catch (IOException e) {
+  	        	e.printStackTrace(); 	        	
+  	        }
+  	        
+  	        responseString = sb.toString();
+  	        if(CustomUtil.getInstance(Home.context).isJSONValid(responseString)) {
+  	        	Log.e("SeverResponse=>", responseString);
 	  	    	try {
 					jsonResult = new JSONObject(responseString);
 					String success = jsonResult.getString("success");
-					if(success == null) {
+					if (success == null) {
 						Log.e("SeverResponse=>", "success variable is null");
-					} else if(success.equalsIgnoreCase("0")) {
+					} else if (success.equalsIgnoreCase("0")) {
 						String message = jsonResult.getString("message");
 						Toast.makeText(Home.context, message, Toast.LENGTH_LONG).show();
-					} else if(success.equalsIgnoreCase("1")){
+					} else if (success.equalsIgnoreCase("1")) {
 						JSONObject userInfoJsonObj= jsonResult.getJSONObject("userInfo");
 						
 						tvFnameUser.setText(userInfoJsonObj.getString("user_firstname").toString());
@@ -216,8 +209,9 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 						tvPhoneUser.setText(userInfoJsonObj.getString("mobile_no").toString());
 						tvCodeUser.setText(userInfoJsonObj.getString("user_code").toString());
 						searchOptionId = userInfoJsonObj.getInt("search_option");
-						updateSearchOption ();
-  						
+						profileImageUrl = userInfoJsonObj.getString("image_name").toString();
+						updateSearchOption (); 	
+						imageLoader.displayImage(profileImageUrl, imUserProfile, options);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -226,15 +220,15 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
   	      } else {
   	    	Log.e("SeverResponse=>", "is not a JSON =>"+responseString);
   	      }
-  	    CustomUtil.getInstance(Home.context).hideDialogBox();
-  	  }
-  	};
+  	      CustomUtil.getInstance(Home.context).hideDialogBox();	      
+  	    } 	    
+	};
   	
   	// Generate code function
   	
   	interface UserCodeGenerateinterface{
 		@FormUrlEncoded
-		@POST(StaticStrings.UPDATE_USER_DETAILS)
+		@POST(StaticStrings.GENERATE_NEW_CODE)
 		void userCodeGenerate(
 				@Field("userId") Integer userEmailId, 
 				@Field("codeType") String usercode,
@@ -333,7 +327,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
 				newCodeGen();	
 				break;
 			case R.id.ivUserProfilePic:
-				Intent changePic = new Intent(Home.context,ProfileImageUpdater.class);
+				Intent changePic = new Intent(Home.context, ProfileImageUpdater.class);
 				startActivityForResult(changePic, 99);
 				break;
 			case R.id.ivUserProfileEmailEdit:
@@ -599,7 +593,7 @@ public class SelfProfileFragment extends Fragment implements OnClickListener {
   	
   	interface ProfileUpdateInterface{
 		@FormUrlEncoded
-		@POST(StaticStrings.UPDATE_USER_DETAILS)
+		@POST(StaticStrings.UPDATE_USER_PROFILE)
 		void userProfileUpdate(
 				@Field("userId") Integer userId, 
 				@Field("optionId") Integer optionId,

@@ -32,21 +32,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FriendFragment extends Fragment {
 	
 	private ListView lvFriendList ;
-	private Button btnHomeFilter ;
-	private Spinner spnrHome ;
 	private FriendListAdapter adapter ;
 	private List<FriendListDataItem> rowItemsList ;
-	private String[] name, group, address, datetime ;
-	private int[] profImage ;
 	private FragmentManager fragmentManager ;
 	
 	// Retrofit Variables
@@ -85,17 +79,19 @@ public class FriendFragment extends Fragment {
 	
 	public void initializer(View rootView) {
 		lvFriendList = (ListView) rootView.findViewById(R.id.lvFriendList);
-		btnHomeFilter = (Button) rootView.findViewById(R.id.btnHomeFilter);
-		spnrHome = (Spinner) rootView.findViewById(R.id.spnrHome);
 		
 		lvFriendList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				int userid=rowItemsList.get(position).getUserId();
+				int friendiId = rowItemsList.get(position).getUserId();
+				String friendName = rowItemsList.get(position).getName();
+				String friendImgUrl = rowItemsList.get(position).getImage();
 				Bundle bundle=new Bundle();
-				bundle.putInt("friendId", userid);
+				bundle.putInt("friendId", friendiId);
+				bundle.putString("friendName", friendName);
+				bundle.putString("friendImgUrl", friendImgUrl);
 				
 				FriendProfileFragment fr = new FriendProfileFragment();
 				FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -103,7 +99,6 @@ public class FriendFragment extends Fragment {
 				ft.replace(R.id.frame_container, fr);
 				ft.addToBackStack(FriendProfileFragment.class.getName());
 				ft.commit();
-				//Toast.makeText(getActivity(), ""+userid, 300).show();
 			}
 		});
     }
@@ -126,7 +121,7 @@ public class FriendFragment extends Fragment {
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .build();
     		
-    		CustomUtil.getInstance(context).showDialogBox("Server Connection", "Updating Your Response on Server...");
+    		CustomUtil.getInstance(context).showDialogBox("Server Connection", "Loading Your Friend List from Server...");
     		int userId = CustomUtil.getInstance(context).getUserId();
     		
     		getFriendListObj = restAdapter.create(GetFriendListInterface.class);
@@ -141,8 +136,9 @@ public class FriendFragment extends Fragment {
 	  	  
 	  	  @Override
 	  	  public void failure(RetrofitError result) {
-	  		  Log.e("Retrofit Error ","Error in fetching Friend list.");
+	  		Log.e("Retrofit Error ","Error in fetching Friend list.");
 	  		CustomUtil.getInstance(context).hideDialogBox();
+	  		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
 	  	  }
 	  	  
 	  	  @Override
@@ -175,7 +171,7 @@ public class FriendFragment extends Fragment {
 							Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
 						} else if(success.equalsIgnoreCase("1")){
-							String message = jsonResult.getString("message");
+							//String message = jsonResult.getString("message");
 							JSONArray friendList = jsonResult.getJSONArray("friendList");
 							sendFriendListToAdapter(friendList);
 						}

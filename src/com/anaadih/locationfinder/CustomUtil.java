@@ -237,5 +237,10 @@ public class CustomUtil {
             return null;           
         }       
     }
-    
+    public void showNetworkErrorAlertBox(RetrofitError result) {
+    	if(result.isNetworkError()) {
+  			NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Network Error", 
+  					"Network Error: Please check your Internet is working Properly.");
+  		}
+    }
 }

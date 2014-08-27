@@ -18,7 +18,7 @@
             android:id="@+id/ivreceiverequestPic"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:contentDescription="your pic"
+            android:contentDescription="@string/img_desc"
             android:src="@drawable/images" />
 
     </LinearLayout>

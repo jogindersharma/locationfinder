@@ -1,8 +1,5 @@
 package com.anaadih.locationfinder;
 
-import java.util.List;
-import java.util.Locale;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -15,9 +12,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -30,18 +26,24 @@ public class MapActivity extends Activity {
 		//GPSTracker gps;
 		double latitude ;
 		double longitude ;
+		String Name,address;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.map_location);
 			this.context=this;
 			
+			Intent intent = getIntent();
+		    Bundle bundle = intent.getExtras();
 			
-			
-			
-			
-			
-			
+			latitude =  bundle.getDouble("latitude");
+			Log.e("map latitiude", ""+latitude);
+			longitude =  bundle.getDouble("longitude");
+			Log.e("map longitude", ""+longitude);
+			Name =  bundle.getString("friendFname");
+			Log.e("map Name", ""+Name);
+			address =  bundle.getString("friendfullAddress");
+			Log.e("map address", ""+address);
 			/* gps = new GPSTracker(MainActivity.this);
 			try {
 				// Loading map
@@ -114,13 +116,12 @@ public class MapActivity extends Activity {
 				 StateName = addresses.get(0).getAddressLine(1);
 				 CountryName = addresses.get(0).getAddressLine(2);*/
 				// latitude and longitude
-				 latitude = 17.385044;
-				 longitude = 78.486671;
+				
 				Marker melbourne = googleMap.addMarker(new MarkerOptions()
 				                          .position(new LatLng(latitude, longitude))
-				                          .title("Amit Groch")
+				                          .title(Name)
 				                          .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-				                          .snippet("nodia"));
+				                          .snippet(address));
 				melbourne.showInfoWindow();
 				
 				//MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Hello Maps ");

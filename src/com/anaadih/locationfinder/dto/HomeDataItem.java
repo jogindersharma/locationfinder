@@ -3,62 +3,103 @@ package com.anaadih.locationfinder.dto;
 public class HomeDataItem {
 	
 	private String name ;
-	private String group ;
 	private String address ;
 	private String dateTime ;
-	private int image ;
+	private String imageUrl ;
+	private String latitude;
+	private String longitude;
+	private String friendId;
+	private String fName;
+	private String lName;
+	
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getFriendId() {
+		return friendId;
+	}
+
+	public void setFriendId(String friendId) {
+		this.friendId = friendId;
+	}
+
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
+	}
 	
 	public HomeDataItem() {
 		super();
 	}
-	
-	public HomeDataItem(String name, String group, String address,
-			String dateTime, int image) {
+
+	public HomeDataItem(String name, String address,
+			String dateTime, String imageUrl,String latitude,String longitude,String friendId,String fName,String lName) {
 		super();
 		this.name = name;
-		this.group = group;
 		this.address = address;
 		this.dateTime = dateTime;
-		this.image = image;
+		this.imageUrl = imageUrl;
+		this.fName = fName;
+		this.lName=lName;
+		this.latitude=latitude;
+		this.longitude=longitude;
+		this.friendId=friendId;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String getGroup() {
-		return group;
-	}
-	
-	public void setGroup(String group) {
-		this.group = group;
-	}
-	
+
 	public String getAddress() {
 		return address;
 	}
-	
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	public String getDateTime() {
 		return dateTime;
 	}
-	
+
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
-	
-	public int getImage() {
-		return image;
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
-	
-	public void setImage(int image) {
-		this.image = image;
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
+    
 }

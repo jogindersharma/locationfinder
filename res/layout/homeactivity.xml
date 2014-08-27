@@ -8,7 +8,45 @@
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/sgibrightgray" >
+        
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#f4f4f4" >
+        
+            <LinearLayout
+                android:id="@+id/llHomeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:background="@color/Blue" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Location Results"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="20dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lvHomeAllList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llHomeTitle" >
+            
+            </ListView>
+        
+        </RelativeLayout>
+        
+    </FrameLayout>
 
     <!-- Listview to display slider menu -->
     <ListView

@@ -99,8 +99,12 @@ public class SearchFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				findFriendsTask();
+				searchInputVal = etSearchInput.getText().toString();
+				if(searchInputVal != null && searchInputVal.length() > 0) {
+					findFriendsTask();
+				} else {
+					Toast.makeText(context, "Please Provide Input to Find Friend.", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		

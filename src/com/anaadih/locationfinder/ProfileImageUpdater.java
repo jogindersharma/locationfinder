@@ -1,7 +1,6 @@
 package com.anaadih.locationfinder;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -21,30 +20,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Toast;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
-import com.anaadih.locationfinder.ReceiveRequest.ReceiveRequestInterface;
 import com.anaadih.locationfinder.networking.NetworkStatus;
 import com.edmodo.cropper.CropImageView;
 
@@ -55,7 +40,6 @@ public class ProfileImageUpdater extends Activity {
     private static final int ROTATE_NINETY_DEGREES = 90;
     private static final String ASPECT_RATIO_X = "ASPECT_RATIO_X";
     private static final String ASPECT_RATIO_Y = "ASPECT_RATIO_Y";
-    private static final int ON_TOUCH = 1;
     String TAG ="ProfileImageUpdater";
     Context context;
     boolean isImageSelected = false;
@@ -92,28 +76,8 @@ public class ProfileImageUpdater extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.profile_image_update);
         context = this;
-        // Sets fonts for all
-        /*Typeface mFont = Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf");
-        ViewGroup root = (ViewGroup) findViewById(R.id.mylayout);
-        setFont(root, mFont);*/
 
-        // Initialize components of the app
-     //   cropImageView = (CropImageView) findViewById(R.id.CropImageView);
         cropImageView = (CropImageView) findViewById(R.id.ivProfileImageUpdate);
-        /*final SeekBar aspectRatioXSeek = (SeekBar) findViewById(R.id.aspectRatioXSeek);
-        final SeekBar aspectRatioYSeek = (SeekBar) findViewById(R.id.aspectRatioYSeek);
-        final ToggleButton fixedAspectRatioToggle = (ToggleButton) findViewById(R.id.fixedAspectRatioToggle);*/
-        //Spinner showGuidelinesSpin = (Spinner) findViewById(R.id.showGuidelinesSpin);
-        
-        // Sets sliders to be disabled until fixedAspectRatio is set
-        /*aspectRatioXSeek.setEnabled(false);
-        aspectRatioYSeek.setEnabled(false);*/
-
-        // Set initial spinner value
-        //showGuidelinesSpin.setSelection(ON_TOUCH);
-        
-        //Sets the rotate button
-       // final Button rotateButton = (Button) findViewById(R.id.Button_rotate);
         final Button rotateButton = (Button) findViewById(R.id.btnProfileImageUpdateRotate);
         rotateButton.setOnClickListener(new View.OnClickListener() {
 
@@ -123,84 +87,7 @@ public class ProfileImageUpdater extends Activity {
             }
         });
         
-        /*// Sets fixedAspectRatio
-        fixedAspectRatioToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                cropImageView.setFixedAspectRatio(isChecked);
-                if (isChecked) {
-                    aspectRatioXSeek.setEnabled(true);
-                    aspectRatioYSeek.setEnabled(true);
-                }
-                else {
-                    aspectRatioXSeek.setEnabled(false);
-                    aspectRatioYSeek.setEnabled(false);
-                }
-            }
-        });*/
-        
-        // Sets initial aspect ratio to 10/10, for demonstration purposes
         cropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
-
-        // Sets aspectRatioX
-        /*final TextView aspectRatioX = (TextView) findViewById(R.id.aspectRatioX);
-
-        aspectRatioXSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar aspectRatioXSeek, int progress, boolean fromUser) {
-                try {
-                    mAspectRatioX = progress;
-                    cropImageView.setAspectRatio(progress, mAspectRatioY);
-                    aspectRatioX.setText(" " + progress);
-                } catch (IllegalArgumentException e) {
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });*/
-
-        // Sets aspectRatioY
-       /* final TextView aspectRatioY = (TextView) findViewById(R.id.aspectRatioY);
-
-        aspectRatioYSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar aspectRatioYSeek, int progress, boolean fromUser) {
-                try {
-                    mAspectRatioY = progress;
-                    cropImageView.setAspectRatio(mAspectRatioX, progress);
-                    aspectRatioY.setText(" " + progress);
-                } catch (IllegalArgumentException e) {
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });*/
-		
-        // Sets up the Spinner
-        /*showGuidelinesSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                cropImageView.setGuidelines(i);
-            }
-
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
-            }
-        });
-		*/
-        //final Button cropButton = (Button) findViewById(R.id.Button_crop);
         final Button cropButton = (Button) findViewById(R.id.btnProfileImageUpdatePreview);
         cropButton.setOnClickListener(new View.OnClickListener() {
 
@@ -226,8 +113,6 @@ public class ProfileImageUpdater extends Activity {
             }
         });
         
-        
-        //Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
         Button buttonLoadImage = (Button) findViewById(R.id.btnProfileImageUpdateGallery);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
 			
@@ -239,27 +124,27 @@ public class ProfileImageUpdater extends Activity {
 			}
 		});
         
-        //Button buttonLoadImage = (Button) findViewById(R.id.buttonLoadPicture);
         Button buttonLoadCamera = (Button) findViewById(R.id.btnProfileImageUpdateCamera);
         buttonLoadCamera.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                /*File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));*/
                 startActivityForResult(intent, RESULT_LOAD_CAMERA);
-				/*Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(i, RESULT_LOAD_CAMERA);*/
 			}
 		});
     }
 
     public boolean cropSelectedeImage() {
     	if(isImageSelected) {
-    		croppedImage = cropImageView.getCroppedImage();
-    		isImageCroped = true;
-    		return true;    		
+    		if(cropImageView != null) {
+	    		croppedImage = cropImageView.getCroppedImage();
+	    		isImageCroped = true;
+	    		return true; 
+    		} else {
+    			NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Alert", "Please Select the Image");
+    			return false;
+    		}
     	} else {
     		NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Alert", "Please Select the Image");
     		return false;
@@ -374,8 +259,8 @@ public class ProfileImageUpdater extends Activity {
     		
     		//Log.e("Retrofit Error ",result.getMessage());
     		Log.e("Retrofit Error ","Error in updating User Profile Pic on Server");
-    		NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", "Error updating your Profile Pic. Please use low memory image.");
     		CustomUtil.getInstance(context).hideDialogBox();
+    		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
     	  }
     	  
     	  @Override

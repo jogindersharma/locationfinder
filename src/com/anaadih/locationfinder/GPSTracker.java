@@ -2,9 +2,12 @@ package com.anaadih.locationfinder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.anaadih.locationfinder.networking.NetworkStatus;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -33,7 +36,7 @@ public class GPSTracker extends Service implements LocationListener {
 	// flag for GPS status
 	boolean canGetLocation = false;
 
-	Location location; // location
+	Location location,locationGps,locationNetwork; // location
 	double latitude; // latitude
 	double longitude; // longitude
 	String getLocRequestId;
@@ -58,7 +61,7 @@ public class GPSTracker extends Service implements LocationListener {
 	protected LocationManager locationManager;
 
 	public GPSTracker() {
-		context=Home.context;
+		context = this;
 	}
 	
 	@Override
@@ -69,7 +72,6 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        context = Home.context;
         Log.e("onCreate","Called");
     }
 
@@ -88,8 +90,7 @@ public class GPSTracker extends Service implements LocationListener {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-		context=Home.context;
-		Log.e("inGPSTACKERService","onstatcommand");
+		Log.e("inGPSTACKERService","onstartcommand");
 		if(intent.getExtras().getString("getLocRequestId") !="") {
 			getLocRequestId = intent.getExtras().getString("getLocRequestId");
 			Log.e("inGPSTACKERService","onstatcommand getLocRequestId"+getLocRequestId);
@@ -100,8 +101,7 @@ public class GPSTracker extends Service implements LocationListener {
 
 	public void getLocation() {
 		try {
-			locationManager = (LocationManager) context
-					.getSystemService(LOCATION_SERVICE);
+			locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
 
 			// getting GPS status
 			isGPSEnabled = locationManager
@@ -125,12 +125,12 @@ public class GPSTracker extends Service implements LocationListener {
 							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 					Log.d("Network", "Network"+locationManager);
 					if (locationManager != null) {
-						location = locationManager
+						locationNetwork = locationManager
 								.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 						message="NETWORK_PROVIDER is enabled";
-						if (location != null) {
-							latitude = location.getLatitude();
-							longitude = location.getLongitude();
+						if (locationNetwork != null) {
+							latitude = locationNetwork.getLatitude();
+							longitude = locationNetwork.getLongitude();
 						}
 						
 						Log.e(TAG, " network latitude and longitude"+latitude+"----"+longitude);
@@ -147,22 +147,41 @@ public class GPSTracker extends Service implements LocationListener {
 								MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 						Log.d("GPS Enabled", "GPS Enabled"+locationManager);
 						if (locationManager != null) {
-							location = locationManager
+							locationGps = locationManager
 									.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 							message=message+"  GPS  is  enabled.";
-							if (location != null) {
-								latitude = location.getLatitude();
-								longitude = location.getLongitude();
+							if (locationGps != null) {
+								latitude = locationGps.getLatitude();
+								longitude = locationGps.getLongitude();
 							}
 							Log.e(TAG, " GPS latitude and longitude"+latitude+"----"+longitude);
 						}
 					}
 				}
+				// Latest code by amit start
+				if(locationNetwork!=null && locationGps!=null){
+					if(locationNetwork.getTime()>locationGps.getTime())
+	                {latitude = locationNetwork.getLatitude();
+	                longitude = locationNetwork.getLongitude();
+	                 
+	                }
+	                 else
+	                {latitude = locationGps.getLatitude();
+	                longitude = locationGps.getLongitude();
+	                
+	                }
+					
+					
+				}
+				
+				// Latest code by amit end
 			}
 			if(latitude!=0.0){
 			sendLocation();
 			}else{
-				Log.e(TAG, "lat long is empty");
+				Log.e(TAG, "lat long is empty and we are trying to get");
+				Thread.sleep(9000);
+				getLocation();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -297,7 +316,7 @@ public class GPSTracker extends Service implements LocationListener {
         .setEndpoint(StaticStrings.SITE_URL)
         .setLogLevel(RestAdapter.LogLevel.FULL)
         .build();
-		 if (NetworkStatus.getInstance(Home.context).isInternetAvailable(Home.context)) {
+		 if (NetworkStatus.getInstance(context).isInternetAvailable(context)) {
 			 
 			 	Log.e(TAG, "Internet is available");
 	    		//CustomUtil.getInstance(Home.context).hideDialogBox();
@@ -307,7 +326,7 @@ public class GPSTracker extends Service implements LocationListener {
 			 
 		 }else{
 				Log.e(TAG, "##########You are not online!!!!");
-	    		NetworkStatus.getInstance(Home.context).showDefaultNoInternetDialog(Home.context);
+	    		NetworkStatus.getInstance(context).showDefaultNoInternetDialog(context);
 		 }
 		
 	}

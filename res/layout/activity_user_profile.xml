@@ -5,42 +5,49 @@
     android:orientation="vertical"
     android:background="@color/sgibrightgray" >
 
-    
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@color/TransParent" >
         
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp" >
             
             <LinearLayout
 		        android:layout_width="match_parent"
-		        android:layout_height="0dp"
-		        android:background="@color/LightCyan"
-		        android:gravity="center"
-		        android:layout_marginBottom="20dp"
-		        android:layout_weight=".4" >
+		        android:layout_height="150dp"
+		        android:background="@drawable/profile_bg"
+		        android:gravity="center" >
 
 		        <ImageView
 		            android:id="@+id/ivUserProfilePic"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:src="@drawable/images" />
+		            android:layout_width="128dp"
+		            android:layout_height="128dp"
+		            android:src="@drawable/no_profile_image"
+		            android:contentDescription="@string/img_desc" />
 
     		</LinearLayout>
+    		
+    		<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="vertical"
+                android:background="@color/Gray"
+                android:layout_marginBottom="20dp" >
+
+            </LinearLayout>
             
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/white"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:padding="15dp" >
 
                 <LinearLayout
@@ -76,7 +83,8 @@
                             android:id="@+id/ivUserProfileFNameEdit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/edit" />
+                            android:src="@drawable/ic_action_edit_black"
+                            android:contentDescription="@string/img_desc" />
 
                     </LinearLayout>
 
@@ -116,7 +124,8 @@
                             android:id="@+id/ivUserProfileLNameEdit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/edit" />
+                            android:src="@drawable/ic_action_edit_black"
+                            android:contentDescription="@string/img_desc" />
 
                     </LinearLayout>
 
@@ -156,7 +165,8 @@
                             android:id="@+id/ivUserProfileEmailEdit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/edit" />
+                            android:src="@drawable/ic_action_edit_black"
+                            android:contentDescription="@string/img_desc" />
                         
                     </LinearLayout>
                     
@@ -196,7 +206,8 @@
                             android:id="@+id/ivUserProfileMobEdit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/edit" />
+                            android:src="@drawable/ic_action_edit_black"
+                            android:contentDescription="@string/img_desc" />
                         
                     </LinearLayout>
                     
@@ -210,6 +221,8 @@
                 android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:padding="15dp" >
 
                 <LinearLayout
@@ -220,7 +233,7 @@
                         android:id="@+id/tvFriendProfileLocLable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Set Your Search Option"
+                        android:text="@string/UserProfileOptionLabel"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
                     
                 </LinearLayout>
@@ -244,7 +257,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:text="By Code"
+                        android:text="@string/UserProfileByCode"
                         android:checked="true"
                         android:clickable="false" />
 
@@ -253,7 +266,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:text="By Name" />
+                        android:text="@string/UserProfileByName" />
 
                 </LinearLayout>
                 
@@ -269,14 +282,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:text="By Email" />
+                        android:text="@string/UserProfileByEmail" />
 
                     <CheckBox
                         android:id="@+id/chbxUserProfileMobNo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:text="By Mobile No" />
+                        android:text="@string/UserProfileByMobNo" />
 
                 </LinearLayout>
 
@@ -288,6 +301,8 @@
                 android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:padding="15dp" >
                 
                 <Button
@@ -295,7 +310,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@color/Blue"
-                    android:text="Save Profile" />
+                    android:text="@string/UserProfileSaveProfile" />
 
             </LinearLayout>
             
@@ -306,12 +321,15 @@
                 android:background="@color/white"
                 android:layout_marginTop="20dp"           
                 android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:padding="15dp" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1.0" >
+                    android:weightSum="1.0"
+                    android:baselineAligned="false" >
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -367,7 +385,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/TransParent"
-                android:layout_marginTop="20dp" >
+                android:layout_marginTop="10dp" >
 
             </LinearLayout>
 

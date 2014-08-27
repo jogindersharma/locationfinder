@@ -19,7 +19,7 @@
             android:id="@+id/tvProfileUpdateHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile Update"
+            android:text="@string/ProfileUpdateLabel"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
@@ -34,7 +34,7 @@
             android:id="@+id/tvProfileUpdateHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter valid inputs" />
+            android:text="@string/ValidInput" />
 
     </LinearLayout>
 
@@ -54,7 +54,6 @@
             android:background="@drawable/edittext_normal"
             android:ems="10"
             android:paddingLeft="5dp"
-            android:hint="e.g www.google.com"
             android:inputType="textPersonName" >
 
         </EditText>
@@ -65,7 +64,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:weightSum="2" >
+        android:weightSum="2"
+        android:baselineAligned="false" >
 
         <LinearLayout
             android:id="@+id/llProfileUpdateCancel"
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/Blue"
-                android:text="Cancel"
+                android:text="@string/Cancel"
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/Blue"
-                android:text="Save"
+                android:text="@string/Save"
                 android:textStyle="bold" />
 
         </LinearLayout>

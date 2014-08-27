@@ -138,6 +138,7 @@ public class ReceiveRequest extends Fragment {
     		  //Log.e("Retrofit Error ",result.getMessage());
     		  Log.e("Retrofit Error ",result.toString());
     		CustomUtil.getInstance(context).hideDialogBox();
+    		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
     	  }
     	  
     	  @Override

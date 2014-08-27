@@ -144,6 +144,7 @@ public class Register extends Activity {
   	  public void failure(RetrofitError result) {
   		  Log.e("Retrofit Error ",result.getMessage());
   		CustomUtil.getInstance(context).hideDialogBox();
+  		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
   	  }
   	  
   	  @Override

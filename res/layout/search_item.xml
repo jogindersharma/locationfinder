@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:baselineAligned="false"
-    android:weightSum="1.0" >
+    android:weightSum="1.0"
+    android:background="@color/sgibrightgray" >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -18,7 +19,8 @@
             android:id="@+id/ivSearchItemPic"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:src="@drawable/images" />
+            android:src="@drawable/images"
+            android:contentDescription="@string/img_desc" />
 
     </LinearLayout>
 
@@ -74,10 +76,10 @@
                 android:orientation="vertical"
                 android:layout_weight=".5" >
 
-                <ToggleButton
+                <!-- <ToggleButton
                     android:id="@+id/tgbtnSearchItemBlock"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" /> -->
 
             </LinearLayout>
 

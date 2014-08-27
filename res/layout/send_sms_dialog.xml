@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="false"
             android:ems="10"
-            android:hint="Enter Your Message..."
+            android:hint="@string/EnterMessage"
             android:background="@android:color/transparent" >
 
         </EditText>
@@ -56,7 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.1"
-        android:weightSum="2" >
+        android:weightSum="2"
+        android:baselineAligned="false"  >
 
         <LinearLayout
             android:id="@+id/llSendSmsCancel"
@@ -70,7 +71,7 @@
                 android:id="@+id/tvSendSmsCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/Cancel"
                 android:textSize="16sp"
                 android:textColor="@color/Blue" />
 
@@ -90,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/Blue"
                 android:textSize="16sp"
-                android:text="Send" />
+                android:text="@string/Send" />
 
         </LinearLayout>
 

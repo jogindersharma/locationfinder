@@ -4,23 +4,6 @@
     <string name="app_name">Location Finder</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
-    <!--  <string name="regToHidCam">Register to  Hidden Camera</string>
-    <string name="fName">First Name</string>
-    <string name="lName">Last Name</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="rePassword">Re-Type Password</string>
-    <string name="register">Register</string>
-    
-    <string name="successfullRegMsg">Congratulations. You have Successfully Registered.</string>
-    <string name="closeApp">Close Application</string> -->
-    
-    <!-- <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="drawer_open">Slider Menu Opened</string>
-    <string name="drawer_close">Slider Menu Closed</string> -->
     
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
@@ -28,10 +11,9 @@
         <item >Find People</item> 
         <item >Friends</item>
         <item >Profile</item>
-        <item >Get location</item>
-        <item >Location</item>
         <item >Receive Request</item>
         <item >Create Group</item>
+        <item >Groups</item>
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->
@@ -41,10 +23,9 @@
         <item>@drawable/ic_people</item>
         <item>@drawable/ic_photos</item>
         <item>@drawable/ic_communities</item>
-        <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>
-        <item>@drawable/ic_people</item>
-        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_action_add_group</item>
+        <item>@drawable/ic_action_group</item>
     </array>
     
     <!-- Content Description -->
@@ -75,13 +56,15 @@
     <string name="HomeItemName">Pramod Kumar Varma</string>
     <string name="HomeItemAddress">C-279 New Ashok Nagar Delhi</string>
     <string name="HomeItemDateTime">11 May 2014 (6:30 PM)</string>
+    <string name="HomeItemFriendList">Friend List</string>
+    <string name="HomeItemTitle">Recent Get Location Results</string>
     
      <!-- String for Friend List Page -->
-    <string name="FriendListItemName">Joginder Sharma</string>
+    <string name="FriendListItemName">Pramod Varma</string>
     
     
     <!-- String for Friend Profile -->
-    <string name="FriendProfileName">Name Varma</string>
+    <string name="FriendProfileName">Pramod Varma</string>
     <string name="FriendProfileLocLable">Location</string>
     <string name="FriendProfileDateTime">Date Time</string>
     <string name="FriendProfileAddress">C-279 New Ashok Nagar Delhi</string>
@@ -89,16 +72,22 @@
     <string name="FriendProfileSendSMS">Send SMS</string>
     <string name="FriendProfileBlock">Block</string>
     <string name="FriendProfileAdd">Add</string>
-    <string name="FriendListCircleName">Circle Name</string>
+    <string name="FriendListCircleName">Friends</string>
     
     <!-- String for User Profile -->
-    <string name="UserProfileFirstName">Pramod</string>
-    <string name="UserProfileLastName">Varma</string>
-    <string name="UserProfileEmail">vermapkg@gmail.com</string>
-    <string name="UserProfileMob">5436725346</string>
+    <string name="UserProfileFirstName">First Name</string>
+    <string name="UserProfileLastName">Last Name</string>
+    <string name="UserProfileEmail">Email-Id</string>
+    <string name="UserProfileMob">9999999999</string>
     <string name="UserProfileCodeLabel">Code</string>
-    <string name="UserProfileCode">er45TysTgH</string>
+    <string name="UserProfileCode"></string>
     <string name="UserProfileNewCode">Generate New Code</string>
+    <string name="UserProfileOptionLabel">Set Your Search Option</string>
+    <string name="UserProfileByCode"> By Code</string>
+    <string name="UserProfileByName"> By Name</string>
+    <string name="UserProfileByEmail"> By Email</string>
+    <string name="UserProfileByMobNo"> By Mobile</string>
+    <string name="UserProfileSaveProfile">Save Profile</string>
     
     <!-- String for Search Item -->
     <string name="SearchInput">Enter Code</string>
@@ -125,4 +114,24 @@
     <string name="ProfileImageUpdateRotate">Rotate</string>
     <string name="ProfileImageUpdatePreview">Preview</string>
     <string name="ProfileImageUpdateSetProfile">Set Profile</string>
+    
+    <string name="img_desc">Image Desc</string>
+    
+    <!-- String for group -->
+    <string name="CreateGroupLabel">Group Creation</string>
+    <string name="CreateGroupGroupNameHint">Enter Group Name</string>
+    <string name="CreateGroupCreate">Create</string>
+    <string name="GroupListLabel">Group List</string>
+    <string name="GroupItemName">Group Name</string>
+    <string name="GroupItemEdit">Edit</string>
+    <string name="GroupItemDelete">Delete</string>
+    
+    <!-- String for Dialog -->
+    <string name="Cancel">Cancel</string>
+    <string name="EnterMessage">Enter Your Message</string>
+    <string name="Send">Send</string>
+    <string name="ProfileUpdateLabel">Profile Update</string>
+    <string name="ValidInput">Enter Valid Input</string>
+    <string name="Save">Save</string>
+    
 </resources>

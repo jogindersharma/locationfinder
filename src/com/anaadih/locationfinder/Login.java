@@ -75,7 +75,12 @@ public class Login extends Activity {
     	loginSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            	userLogin();
+            	getRegFormValues();
+            	if(!loginEmailVal.equalsIgnoreCase("") && !loginPassVal.equalsIgnoreCase("")) {
+            		userLogin();
+            	} else {
+            		Toast.makeText(context, "Please Provide Input to Login.", Toast.LENGTH_SHORT).show();
+            	}
             }
         });
         
@@ -88,8 +93,7 @@ public class Login extends Activity {
     }
     
     public void userLogin() {
-    	getRegFormValues();
-
+    	
         restAdapter = new RestAdapter.Builder()
         .setEndpoint(StaticStrings.SITE_URL)
         .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -115,6 +119,7 @@ public class Login extends Activity {
     		  //Log.e("Retrofit Error ",result.getMessage());
     		  Log.e("Retrofit Error ","Error in Server Response");
     		CustomUtil.getInstance(context).hideDialogBox();
+    		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
     	  }
     	  
     	  @Override
@@ -152,7 +157,6 @@ public class Login extends Activity {
   						CustomUtil.getInstance(context).goToUserHome();
   					}
   				} catch (JSONException e) {
-  					// TODO Auto-generated catch block
   					e.printStackTrace();
   				}
     	      } else {
@@ -171,7 +175,6 @@ public class Login extends Activity {
 		Log.e(TAG, "goToLoginPage");
 		Intent intent = new Intent(context,Register.class);
 		startActivity(intent);
-        finish();
 	}
     
     private void storeUserId(int userId) {

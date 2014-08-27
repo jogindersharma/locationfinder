@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1.0"
-    tools:context="com.anaadihsoftech.locationfinder.MainActivity" >
+    tools:context="com.anaadihsoftech.locationfinder.MainActivity"
+    android:background="@color/sgibrightgray" >
      <ListView
             android:id="@+id/lvreceivefrdrequest"
             android:layout_width="match_parent"

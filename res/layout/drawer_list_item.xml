@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/icon"
         android:textColor="@color/list_item_title"
-        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:paddingRight="40dp"/>
     
     <TextView android:id="@+id/counter"

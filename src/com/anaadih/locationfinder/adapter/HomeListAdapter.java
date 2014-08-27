@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.anaadih.locationfinder.R;
 import com.anaadih.locationfinder.dto.HomeDataItem;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,11 +22,24 @@ public class HomeListAdapter extends BaseAdapter {
 	
 	private Context context ;
 	private List<HomeDataItem> rowItems ;
+	
+	private ImageLoader imageLoader ;
+	private DisplayImageOptions options ;
 
 	public HomeListAdapter(Context context, List<HomeDataItem> rowItems) {
 		super();
 		this.context = context;
 		this.rowItems = rowItems;
+		
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+
+		options = new DisplayImageOptions.Builder()
+		.displayer(new RoundedBitmapDisplayer((int) 27.5f))
+		.showStubImage(R.drawable.ic_launcher) //this is the image that will be displayed if download fails
+	    .cacheInMemory()
+		.cacheOnDisc()
+		.build();
 	}
 
 	@Override
@@ -66,7 +83,8 @@ public class HomeListAdapter extends BaseAdapter {
 	        holder.tvHomeItemName.setText(rowItem.getName());
 	        holder.tvHomeItemAddress.setText(rowItem.getAddress());
 	        holder.tvHomeItemDateTime.setText(""+rowItem.getDateTime());
-	        holder.ivHomeItemPic.setImageResource(rowItem.getImage());
+	       // holder.ivHomeItemPic.setImageResource(rowItem.getImage());
+	        imageLoader.displayImage(rowItem.getImageUrl(), holder.ivHomeItemPic, options);
 	        
 	        return convertView;
 	}

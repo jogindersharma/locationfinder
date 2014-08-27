@@ -87,7 +87,7 @@ public class SearchListAdapter extends BaseAdapter {
 	        holder.tvSearchItemName = (TextView) convertView.findViewById(R.id.tvSearchItemName);
 	        holder.ivSearchItemPic = (ImageView) convertView.findViewById(R.id.ivSearchItemPic);
 	        holder.btnSearchItemAdd = (Button) convertView.findViewById(R.id.btnSearchItemAdd);
-	        holder.tgbtnSearchItemBlock = (ToggleButton) convertView.findViewById(R.id.tgbtnSearchItemBlock);
+	      //  holder.tgbtnSearchItemBlock = (ToggleButton) convertView.findViewById(R.id.tgbtnSearchItemBlock);
 	         
 	        convertView.setTag(holder);        
 	    } else {
@@ -111,13 +111,13 @@ public class SearchListAdapter extends BaseAdapter {
 				}
 			});
 	        
-	        holder.tgbtnSearchItemBlock.setOnClickListener(new OnClickListener() {
+	        /*holder.tgbtnSearchItemBlock.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 					Log.e("inSideAdapter", "Block Btn");
 				}
-			});
+			});*/
 	        
 	        return convertView;
 	}
@@ -131,7 +131,7 @@ public class SearchListAdapter extends BaseAdapter {
 		ImageView ivSearchItemPic ;
 		TextView tvSearchItemName ;	
 		Button btnSearchItemAdd ;
-		ToggleButton tgbtnSearchItemBlock ;
+		//ToggleButton tgbtnSearchItemBlock ;
 		int friendId;
 	}
 }

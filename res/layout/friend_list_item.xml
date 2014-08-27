@@ -18,6 +18,7 @@
             android:id="@+id/ivFriendListPic"
             android:layout_width="72dp"
             android:layout_height="72dp"
+            android:contentDescription="@string/img_desc"
             android:src="@drawable/images" />
 
     </LinearLayout>

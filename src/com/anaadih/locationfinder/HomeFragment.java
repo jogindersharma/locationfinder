@@ -18,7 +18,6 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
-import com.anaadih.locationfinder.FriendFragment.GetFriendListInterface;
 import com.anaadih.locationfinder.adapter.HomeListAdapter;
 import com.anaadih.locationfinder.dto.HomeDataItem;
 import com.anaadih.locationfinder.networking.NetworkStatus;
@@ -27,6 +26,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,8 +46,6 @@ public class HomeFragment extends Fragment {
 	private Spinner spnrHome ;
 	private HomeListAdapter adapter ;
 	private List<HomeDataItem> rowItemsList ;
-	private String[] name, group, address, datetime ;
-	private int[] profImage ;
 	private FragmentManager fragmentManager ;
 	Context context;
 	String TAG ="HomeFragment";
@@ -58,6 +56,7 @@ public class HomeFragment extends Fragment {
 	JSONObject jsonResult;
 	GetFriendLatestLocationInterface getFriendLatestLocObj;
 	RestAdapter restAdapter;
+	JSONArray friendsLocsList ;
 	
 	
 	@Override
@@ -75,38 +74,67 @@ public class HomeFragment extends Fragment {
         fragmentManager = getFragmentManager();
         
         initializer(rootView);
-        //getFriendsLatestLocationList();
-        
-        rowItemsList = new ArrayList<HomeDataItem>() ;
-		name = new String [] { "Amit Groch", "Joginder Sharma", "Pramod Kumar Varma", "Jitendra Kumar Yadav", "Pradeep Singh Gusian",
-				"Anil Kumar Vishwakarma", "Pankaj Kumar Sharma", "Rajesh Kumar", "Ashok Kumar", "Pradeep Pandey" } ;
-		group = new String [] {"Faimily", "Friend", "Collegue", "faimily", "Friend", "Office", "Relative", "Nighbour", "Friend", "Faimily" } ;
-		address = new String [] { "Indira Puram", "Anaadih Softech", "C-279 New Ashok Nagar", "nKaps Intellect", "Subharti University",
-				"Migital Magic", "Clavax India", "Innovative AIIMS", "Fransccicon India", "Tata Consultancy Services (TCS)" } ;
-		datetime = new String [] {"11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)",
-				"11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)", "11 May 2014 (6:30 PM)"} ;
-		profImage = new int[] { R.drawable.images, R.drawable.saab, R.drawable.bmw, R.drawable.images, R.drawable.saab, 
-				R.drawable.bmw, R.drawable.images, R.drawable.saab, R.drawable.bmw, R.drawable.images } ;
-        
-        for (int i = 0 ; i < name .length ; i ++)
-		{
-        	HomeDataItem items = new  HomeDataItem(name[i], group[i], address[i], datetime[i], profImage[i]) ;
-			rowItemsList.add(items) ;
-		}		
-		adapter = new HomeListAdapter(getActivity(), rowItemsList);
-		lvHomeAllList.setAdapter(adapter);
+        getFriendsLatestLocationList();
 		
 		lvHomeAllList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				
 				// TODO Auto-generated method stub
+				 HomeDataItem getdate = rowItemsList.get(position);
+				/*Intent myintent= new Intent(Home.context,Home.class);
+				
+			
+	            myintent.putExtra("latitude", Double.parseDouble(getdate.getLatitude()));
+	            myintent.putExtra("longitude", Double.parseDouble(getdate.getLongitude()));;
+	            myintent.putExtra("user_id", Integer.parseInt(getdate.getFriendId()));
+	            myintent.putExtra("user_firstname", getdate.getfName());
+	            myintent.putExtra("user_lastname", getdate.getlName());
+	            myintent.putExtra("image_name", getdate.getImageUrl());
+	            myintent.putExtra("friendfullAddress", getdate.getAddress());
+	            myintent.putExtra("responseTime", getdate.getDateTime());
+	           startActivity(myintent);*/
+	            
+				 if(getdate.getAddress()!=null && !getdate.getAddress().isEmpty() && getdate.getAddress()!="" && getdate.getLatitude()!=null && getdate.getLatitude().length()>0){
+				 
+	       	Fragment fragment = null;
+    		fragment = new TrackFrdLocationFragment();
+    		Bundle myintent = new Bundle();
+            
+            //Bundle bundle = new Bundle();
+          
+           try {
+			
+        	   myintent.putDouble("latitude", Double.parseDouble(getdate.getLatitude()));
+               myintent.putDouble("longitude", Double.parseDouble(getdate.getLongitude()));
+               myintent.putInt("user_id", Integer.parseInt(getdate.getFriendId()));
+               myintent.putString("user_firstname", getdate.getfName());
+               myintent.putString("user_lastname", getdate.getlName());
+               myintent.putString("image_name", getdate.getImageUrl());
+               myintent.putString("friendfullAddress", getdate.getAddress());
+               myintent.putString("responseTime", getdate.getDateTime());
+               fragment.setArguments(myintent);
+               FragmentManager fragmentManager = getFragmentManager();
+   			  fragmentManager.beginTransaction()
+   					.replace(R.id.frame_container, fragment).commit();
+   	        
+           } catch (Exception e) {
+        	   Toast.makeText(getActivity(), "No Address for this User", Toast.LENGTH_SHORT).show();
+		}
+            
+               
+	          /*
 				SearchResultFragment fr = new SearchResultFragment();
 				FragmentTransaction ft = fragmentManager.beginTransaction();
+				 fr.setArguments(myintent);
 				ft.replace(R.id.frame_container, fr);
 				ft.addToBackStack(SearchResultFragment.class.getName());
-				ft.commit();
+				ft.commit();*/
+				 }else{
+					 Toast.makeText(getActivity(), "No Address for this User", Toast.LENGTH_SHORT).show();
+				 }
 			}
 		});
 		
@@ -121,8 +149,6 @@ public class HomeFragment extends Fragment {
 	
 	public void initializer(View rootView) {
 		lvHomeAllList = (ListView) rootView.findViewById(R.id.lvHomeAllList);
-		btnHomeFilter = (Button) rootView.findViewById(R.id.btnHomeFilter);
-		spnrHome = (Spinner) rootView.findViewById(R.id.spnrHome);
     }
 	
 /* ++++++++++++++++ ============  GET Friends Latest Location   ==========*/
@@ -144,7 +170,7 @@ public class HomeFragment extends Fragment {
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .build();
     		
-    		CustomUtil.getInstance(context).showDialogBox("Server Connection", "Updating Your Response on Server...");
+    		CustomUtil.getInstance(context).showDialogBox("Server Connection", "Loading Data from Server...");
     		int userId = CustomUtil.getInstance(context).getUserId();
     		
     		getFriendLatestLocObj = restAdapter.create(GetFriendLatestLocationInterface.class);
@@ -161,6 +187,7 @@ public class HomeFragment extends Fragment {
 	  	  public void failure(RetrofitError result) {
 	  		  Log.e("Retrofit Error ","Error in fetching Friend list.");
 	  		CustomUtil.getInstance(context).hideDialogBox();
+	  		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
 	  	  }
 	  	  
 	  	  @Override
@@ -194,7 +221,8 @@ public class HomeFragment extends Fragment {
 							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Error", message);
 						} else if(success.equalsIgnoreCase("1")){
 							String message = jsonResult.getString("message");
-							JSONArray friendsLocsList = jsonResult.getJSONArray("friendsLocsList");
+							friendsLocsList = jsonResult.getJSONArray("friendsLocsList");
+							addDataToList() ;
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -205,4 +233,38 @@ public class HomeFragment extends Fragment {
 	  	    CustomUtil.getInstance(context).hideDialogBox();
 	  	  }
 	  	};
+	  	
+	  	public void addDataToList() throws JSONException {
+        	if(friendsLocsList != null) {
+        		
+        		int totalArrayCount = friendsLocsList.length();
+        		
+        		rowItemsList = new ArrayList<HomeDataItem>() ;
+        		
+                for (int i = 0 ; i < totalArrayCount; i ++) {
+                	
+                	JSONObject currUserJsonObj = friendsLocsList.getJSONObject(i);
+                	
+                	//int currUserId = currUserJsonObj.getInt("user_id");
+                	/*String currUserName = currUserJsonObj.getString("user_firstname")+" "+
+                						currUserJsonObj.getString("user_lastname");*/
+                	String currImageUrl = currUserJsonObj.getString("image_name");
+                	String currAddress = currUserJsonObj.getString("address");
+                	String currUpdatedDateTime = currUserJsonObj.getString("updated_at");
+                	String currentlatitue=currUserJsonObj.getString("latitude");
+                	String currentlongtude=currUserJsonObj.getString("longitude");
+                	String currentFriendId=currUserJsonObj.getString("user_id");
+                	String Fname=currUserJsonObj.getString("user_firstname");
+                	String Lname=currUserJsonObj.getString("user_lastname");
+                	String currUserName=Fname+" "+Lname;
+                	
+                		
+                	HomeDataItem items = new HomeDataItem(currUserName, currAddress, currUpdatedDateTime, currImageUrl,currentlatitue,currentlongtude,currentFriendId,Fname,Lname);
+        			rowItemsList.add(items) ;
+        		}	
+                
+        		adapter = new HomeListAdapter(getActivity(), rowItemsList);
+        		lvHomeAllList.setAdapter(adapter);
+        	}
+        }
 }

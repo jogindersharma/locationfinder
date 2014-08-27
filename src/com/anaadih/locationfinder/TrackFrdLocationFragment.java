@@ -17,15 +17,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TrackFrdLocationFragment extends Fragment {
 
 	ImageView ivTrackFriendPic;
 	TextView tvTrackFriendName,tvTrackFriendDateTime,tvTrackFriendAddress;
 	Button btnTrackFriendMap;
-	String latitude,longitude,friendFname,friendLname,friendImageUrl,friendfullAddress;
+	String friendFname,friendLname,friendImageUrl,friendfullAddress,responseTime;
 	int friendId;
+	Double latitude,longitude;
 	private ImageLoader imageLoader ;
 	private DisplayImageOptions options ;
 	
@@ -37,23 +37,25 @@ public class TrackFrdLocationFragment extends Fragment {
 	        rootView.setClickable(true);
 	        initilization(rootView);
 	        
-	        Intent intent = getActivity().getIntent();
-	        Bundle extras = intent.getExtras();
+	       /* Intent intent = getActivity().getIntent();
+	        Bundle extras = intent.getExtras();*/
+	        Bundle extras = this.getArguments();
 	        Log.e("bundle in trak friend location", ""+extras);
-	        if(intent.getExtras().getString("latitude") !="") {
-	        	latitude =  extras.getString("latitude");
-        		longitude =  extras.getString("longitude");
+	        if(extras.getDouble("latitude") !=0.0) {
+	        	latitude =  extras.getDouble("latitude");
+        		longitude =  extras.getDouble("longitude");
         		friendId =  extras.getInt("user_id");
         		friendFname =  extras.getString("user_firstname");
         		friendLname =  extras.getString("user_lastname");
         		friendImageUrl =  extras.getString("image_name");
         		friendfullAddress=extras.getString("friendfullAddress");
-        		
+        		responseTime=extras.getString("responseTime");
         		
         		tvTrackFriendName.setText(friendFname+" "+friendLname);
         		tvTrackFriendAddress.setText(friendfullAddress);
+        		tvTrackFriendDateTime.setText(responseTime);
         		imageLoader = ImageLoader.getInstance();
-        		imageLoader.init(ImageLoaderConfiguration.createDefault(Home.context));
+        		imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
 
         		options = new DisplayImageOptions.Builder()
         		.displayer(new RoundedBitmapDisplayer((int) 27.5f))
@@ -82,7 +84,7 @@ public class TrackFrdLocationFragment extends Fragment {
 				Intent map = new Intent(Home.context,MapActivity.class);
 				map.putExtra("latitude", latitude);
 				map.putExtra("longitude", longitude);
-				map.putExtra("friendFname", friendFname);
+				map.putExtra("friendFname", friendFname+" "+friendLname);
 				map.putExtra("friendfullAddress", friendfullAddress);
 				
 				startActivity(map);

@@ -3,8 +3,6 @@ package com.anaadih.locationfinder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,8 +13,6 @@ import retrofit.client.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
-
-import com.anaadih.locationfinder.HomeFragment.GetFriendLatestLocationInterface;
 import com.anaadih.locationfinder.networking.NetworkStatus;
 
 import android.app.Fragment;
@@ -33,7 +29,7 @@ import android.widget.Toast;
 
 public class CreateGroupFragment extends Fragment { 
 	
-	Button btnCreateGroupCancel, btnCreateGroupSubmit ;
+	Button btnCreateGroupSubmit ;
 	EditText etCreateGroupName ;
 	String groupName ;
 	Context context;
@@ -54,7 +50,6 @@ public class CreateGroupFragment extends Fragment {
         rootView.setClickable(true);
         context = container.getContext();
         
-        btnCreateGroupCancel = (Button) rootView.findViewById(R.id.btnCreateGroupCancel);
         btnCreateGroupSubmit = (Button) rootView.findViewById(R.id.btnCreateGroupSubmit);
         etCreateGroupName = (EditText) rootView.findViewById(R.id.etCreateGroupName);
         
@@ -62,7 +57,6 @@ public class CreateGroupFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				groupName = etCreateGroupName.getText().toString();
 				if (groupName.length() > 0) {
 					createGroup();
@@ -72,15 +66,7 @@ public class CreateGroupFragment extends Fragment {
 				}
 			}
 		});
-        
-        btnCreateGroupCancel.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getActivity().finish();
-			}
-		});       
+         
 		return rootView;
 	}
 	
@@ -121,6 +107,7 @@ public class CreateGroupFragment extends Fragment {
 	  	  public void failure(RetrofitError result) {
 	  		  Log.e("Retrofit Error ","Error in Creating Group...");
 	  		CustomUtil.getInstance(context).hideDialogBox();
+	  		CustomUtil.getInstance(context).showNetworkErrorAlertBox(result);
 	  	  }
 	  	  
 	  	  @Override
@@ -155,6 +142,7 @@ public class CreateGroupFragment extends Fragment {
 						} else if(success.equalsIgnoreCase("1")){
 							String message = jsonResult.getString("message");
 							NetworkStatus.getInstance(context).showDefaultAlertDialog(context, "Server Response", message);
+							etCreateGroupName.setText("");
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();

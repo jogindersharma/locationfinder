@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:weightSum="1.0"
-        android:gravity="center" >
+        android:gravity="center"
+        android:baselineAligned="false" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -24,7 +25,8 @@
                 android:id="@+id/ivFriendProfilePic"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
-                android:src="@drawable/images" />
+                android:src="@drawable/images"
+                android:contentDescription="@string/img_desc" />
 
         </LinearLayout>
 
@@ -33,7 +35,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight=".7"
-            android:gravity="center" >
+            android:gravity="center_vertical" >
 
             <TextView
                 android:id="@+id/tvFriendProfileName"
@@ -57,7 +59,7 @@
             android:orientation="vertical"
             android:layout_marginTop="20dp" >
 
-            <LinearLayout
+            <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -129,7 +131,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout> -->
             
             <LinearLayout
                 android:layout_width="match_parent"
